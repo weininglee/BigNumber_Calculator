@@ -2,8 +2,9 @@
 #include <iostream>
 #include <string>
 #include "NumberObject.h"
-
+#include <vector>
 using std::string;
+using std::vector;
 
 class Integer : NumberObject {
 public:
@@ -12,7 +13,7 @@ public:
 	Integer();
 	Integer(string Int);
 
-	string Int;
+	vector<int> Int;
 
 	Integer operator+(Integer plusInt);
 	Integer operator-(Integer plusInt);
