@@ -13,10 +13,14 @@ bool test() {
 		{"Integer" , &(Integer::test)},
 		{"Decimal" , &(Decimal::test)}
 	};
+	bool test_pass = true;
 	for (const auto& f : tests) {
-		cout << "Test " << f.first << " " << ((*f.second)() ? "pass" : "fail") << "." << endl;
+		if (!(*f.second)()) {
+			cout << "Test " << f.first << " fail." << endl;
+			test_pass = false;
+		}
 	}
-	return true;
+	return test_pass;
 }
 
 int main() {
