@@ -4,7 +4,6 @@
 
 class Integer : NumberObject {
 public:
-	static bool test() {
-		return true;
-	}
+	static bool test();
 };
+
