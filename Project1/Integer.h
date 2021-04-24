@@ -11,12 +11,12 @@ public:
 	static bool test();
 
 	Integer();
-	Integer(string Int);
+	Integer(vector<int> Int);
 
 	vector<int> Int;
 
 	Integer operator+(Integer plusInt);
-	Integer operator-(Integer plusInt);
-	Integer operator*(Integer plusInt);
+	Integer operator-(Integer diffInt);
+	Integer operator*(Integer multiInt);
 };
 
