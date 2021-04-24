@@ -14,6 +14,7 @@ public:
 	Integer(vector<int> Int);
 
 	vector<int> Int;
+	char flag;
 
 	Integer operator+(Integer plusInt);
 	Integer operator-(Integer diffInt);

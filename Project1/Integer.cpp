@@ -38,10 +38,10 @@ Integer Integer::operator+(Integer plusInt) {
 
 Integer Integer::operator-(Integer diffInt) {
 	Integer difference;
-	//char flag = '+';
+
 	int minus = 0, index = 0;
 	if (Int.size() > diffInt.Int.size()) {
-		//flag = '+';
+		flag = '+';
 		for (index; index < diffInt.Int.size(); index++) {
 			int x;
 			if (Int[index] - diffInt.Int[index] - minus < 0) {
@@ -71,7 +71,7 @@ Integer Integer::operator-(Integer diffInt) {
 		}
 	}
 	else if (Int.size() < diffInt.Int.size()) {
-		//flag = '-';
+		flag = '-';
 		for (index; index < Int.size(); index++) {
 			int x;
 			if (diffInt.Int[index] - Int[index] - minus < 0) {
@@ -101,9 +101,9 @@ Integer Integer::operator-(Integer diffInt) {
 		}
 	}
 	else {
-		for (int i = 0; i < Int.size(); i++) {
+		for (int i = Int.size() - 1; i > 0; i--) {
 			if (Int[i] > diffInt.Int[i]) {
-				//flag = '+';
+				flag = '+';
 				for (index; index < diffInt.Int.size(); index++) {
 					int x;
 					if (Int[index] - diffInt.Int[index] - minus < 0) {
@@ -117,23 +117,10 @@ Integer Integer::operator-(Integer diffInt) {
 
 					difference.Int.push_back(x);
 				}
-
-				for (index = diffInt.Int.size(); index < Int.size(); index++) {
-					int x;
-					if (Int[index] - minus < 0) {
-						x = 10 + Int[index] - minus;
-						minus = 1;
-					}
-					else {
-						x = Int[index] - minus;
-						minus = 0;
-					}
-
-					difference.Int.push_back(x);
-				}
+				break;
 			}
 			else if (Int[i] < diffInt.Int[i]) {
-				//flag = '-';
+				flag = '-';
 				for (index; index < Int.size(); index++) {
 					int x;
 					if (diffInt.Int[index] - Int[index] - minus < 0) {
@@ -147,20 +134,7 @@ Integer Integer::operator-(Integer diffInt) {
 
 					difference.Int.push_back(x);
 				}
-
-				for (index = Int.size(); index < diffInt.Int.size(); index++) {
-					int x;
-					if (diffInt.Int[index] - minus < 0) {
-						x = 10 + diffInt.Int[index] - minus;
-						minus = 1;
-					}
-					else {
-						x = diffInt.Int[index] - minus;
-						minus = 0;
-					}
-
-					difference.Int.push_back(x);
-				}
+				break;
 			}
 		}
 	}
