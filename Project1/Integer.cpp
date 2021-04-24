@@ -140,15 +140,17 @@ Integer Integer::operator-(Integer diffInt) {
 	}
 
 	for (int i = difference.Int.size() - 1; i > 0; i--) {
-		if (i == 1) {
 
-		}
 		if (difference.Int[i] == 0) {
 			difference.Int.erase(difference.Int.begin() + i);
 		}
 		else {
 			break;
 		}
+	}
+
+	if ((*this) == diffInt) {
+		difference.Int.push_back(0);
 	}
 
 	return difference;
@@ -164,28 +166,69 @@ bool Integer::operator>(Integer compareInt) {
 	if (flag == 1 && compareInt.flag == -1) return true;
 	if (flag == -1 && compareInt.flag == 1) return false;
 	if (Int.size() > compareInt.Int.size()) return true;
-	
+	if (Int.size() < compareInt.Int.size()) return false;
+
+	for (int i = Int.size() - 1; i >= 0; i--) {
+		if (Int[i] > compareInt.Int[i]) return true;
+		if (Int[i] < compareInt.Int[i]) return false;
+	}
+	return false; // ==
 }
 
-/*bool Integer::operator<(Integer compareInt) {
+bool Integer::operator<(Integer compareInt) {
+	if (flag == 1 && compareInt.flag == -1) return false;
+	if (flag == -1 && compareInt.flag == 1) return true;
+	if (Int.size() > compareInt.Int.size()) return false;
+	if (Int.size() < compareInt.Int.size()) return true;
 
+	for (int i = Int.size() - 1; i >= 0; i--) {
+		if (Int[i] > compareInt.Int[i]) return false;
+		if (Int[i] < compareInt.Int[i]) return true;
+	}
+	return false; // ==
 }
 
 bool Integer::operator>=(Integer compareInt) {
+	if (flag == 1 && compareInt.flag == -1) return true;
+	if (flag == -1 && compareInt.flag == 1) return false;
+	if (Int.size() > compareInt.Int.size()) return true;
+	if (Int.size() < compareInt.Int.size()) return false;
 
+	for (int i = Int.size() - 1; i >= 0; i--) {
+		if (Int[i] > compareInt.Int[i]) return true;
+		if (Int[i] < compareInt.Int[i]) return false;
+	}
+	return true; // ==
 }
 
 bool Integer::operator<=(Integer compareInt) {
+	if (flag == 1 && compareInt.flag == -1) return false;
+	if (flag == -1 && compareInt.flag == 1) return true;
+	if (Int.size() > compareInt.Int.size()) return false;
+	if (Int.size() < compareInt.Int.size()) return true;
 
+	for (int i = Int.size() - 1; i >= 0; i--) {
+		if (Int[i] > compareInt.Int[i]) return false;
+		if (Int[i] < compareInt.Int[i]) return true;
+	}
+	return true; // ==
 }
 
 bool Integer::operator==(Integer compareInt) {
+	if (flag != compareInt.flag) return false;
+	if (Int.size() != compareInt.Int.size()) return false;
 
+	for (int i = Int.size() - 1; i >= 0; i--) {
+		if (Int[i] != compareInt.Int[i]) return false;
+	}
+
+	return true; // ==
 }
 
 bool Integer::operator!=(Integer compareInt) {
-
-}*/
+	if (*this == compareInt) return false;
+	return true;
+}
 
 Integer& Integer::operator=(Integer assignInt) {
 	flag = assignInt.flag;
@@ -217,17 +260,126 @@ Integer& Integer::operator+=(Integer plusInt) {
 		}
 	}
 	if (plus) {
-		Int[index] = plus;
+		Int.push_back(plus);
 	}
 	
 	return *this;
 }
 
-/*Integer& Integer::operator-=(Integer diffInt) {
+Integer& Integer::operator-=(Integer diffInt) {
+	int minus = 0, index = 0;
+	if (Int.size() > diffInt.Int.size()) {
+		flag = 1; // flag = '+'
+		for (index; index < diffInt.Int.size(); index++) {
 
+			if (Int[index] - diffInt.Int[index] - minus < 0) {
+				Int[index] = 10 + Int[index] - diffInt.Int[index] - minus; // x = each digit difference
+				minus = 1;
+			}
+			else {
+				Int[index] = Int[index] - diffInt.Int[index] - minus;
+				minus = 0;
+			}
+
+		}
+
+		for (index = diffInt.Int.size(); index < Int.size(); index++) {
+
+			if (Int[index] - minus < 0) {
+				Int[index] = 10 + Int[index] - minus;
+				minus = 1;
+			}
+			else {
+				Int[index] = Int[index] - minus;
+				minus = 0;
+			}
+
+		}
+	}
+	else if (Int.size() < diffInt.Int.size()) {
+		flag = -1; // flag = '-'
+		for (index; index < Int.size(); index++) {
+
+			if (diffInt.Int[index] - Int[index] - minus < 0) {
+				Int[index] = 10 + diffInt.Int[index] - Int[index] - minus;
+				minus = 1;
+			}
+			else {
+				Int[index] = diffInt.Int[index] - Int[index] - minus;
+				minus = 0;
+			}
+
+		}
+
+		for (index = Int.size(); index < diffInt.Int.size(); index++) {
+
+			if (diffInt.Int[index] - minus < 0) {
+				Int[index] = 10 + diffInt.Int[index] - minus;
+				minus = 1;
+			}
+			else {
+				Int[index] = diffInt.Int[index] - minus;
+				minus = 0;
+			}
+
+		}
+	}
+	else {
+		for (int i = Int.size() - 1; i > 0; i--) {
+			if (Int[i] > diffInt.Int[i]) {
+				flag = 1;
+				for (index; index < diffInt.Int.size(); index++) {
+
+					if (Int[index] - diffInt.Int[index] - minus < 0) {
+						Int[index] = 10 + Int[index] - diffInt.Int[index] - minus;
+						minus = 1;
+					}
+					else {
+						Int[index] = Int[index] - diffInt.Int[index] - minus;
+						minus = 0;
+					}
+
+				}
+				break;
+			}
+			else if (Int[i] < diffInt.Int[i]) {
+				flag = -1;
+				for (index; index < Int.size(); index++) {
+					int x;
+					if (diffInt.Int[index] - Int[index] - minus < 0) {
+						x = 10 + diffInt.Int[index] - Int[index] - minus;
+						minus = 1;
+					}
+					else {
+						x = diffInt.Int[index] - Int[index] - minus;
+						minus = 0;
+					}
+
+				}
+				break;
+			}
+		}
+	}
+
+	for (int i = Int.size() - 1; i > 0; i--) {
+
+		if (Int[i] == 0) {
+			Int.erase(Int.begin() + i);
+		}
+		else {
+			break;
+		}
+	}
+
+	if ((*this) == diffInt) {
+		Int.clear();
+		Int.push_back(0);
+	}
+
+	return *this;
 }
 
-Integer& Integer::operator*=(Integer multiInt) {
+/*Integer& Integer::operator*=(Integer multiInt) {
 
 }
 
