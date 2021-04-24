@@ -1,8 +1,59 @@
 #include "Integer.h"
 using std::reverse;
 
+Integer::Integer() {
+	flag = 1;
+	Int.push_back(0);
+}
+
+Integer::Integer(string s) {
+	flag = 1;
+	if (s[0] == '-') {
+		flag = -1;
+		s = s.substr(1, s.size() - 1);
+	}
+	if (s[0] == '+') {
+		flag = 1;
+		s = s.substr(1, s.size() - 1);
+	}
+	for (auto i = s.rbegin(); i != s.rend(); i++) {
+		Int.push_back(*i - '0');
+	}
+}
+
+Integer::Integer(Integer& from) {
+	flag = from.flag;
+	Int = from.Int;
+}
+
 bool Integer::test() {
-	return true;
+	bool test_pass = true;
+	
+	// test constructors
+	Integer a("999999999999999999999999999999999999999999999999999999999999999999999999999999999"),
+		b("333333333333333333333333333333333333333333333333333333333333333333333333333333333"),c;
+	Integer d = a;
+	d += d;
+	if (d == a) {
+		cout << "copy fail" << endl;
+		test_pass = false;
+	}
+
+	// test operators
+	/*if ((a + b) != Integer("1333333333333333333333333333333333333333333333333333333333333333333333333333333332")) {
+		cout << "a + b fail" << endl;
+		test_pass = false;
+	}
+	if ((a - b) != Integer("666666666666666666666666666666666666666666666666666666666666666666666666666666666")) {
+		cout << "a - b fail" << endl;
+		test_pass = false;
+	}
+	if ((a * b) != Integer("333333333333333333333333333333333333333333333333333333333333333333333333333333332666666666666666666666666666666666666666666666666666666666666666666666666666666667")) {
+		cout << "a * b fail" << endl;
+		test_pass = false;
+	}*/
+
+	return test_pass;
 }
 
 Integer Integer::operator+(Integer plusInt) {

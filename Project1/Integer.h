@@ -14,7 +14,8 @@ public:
 	int flag = 1;
 
 	Integer();
-	Integer(vector<int> Int);
+	Integer(string);
+	Integer(Integer&);
 
 	
 	Integer operator+(Integer plusInt);
