@@ -1,8 +1,9 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "NumberObject.h"
 #include <vector>
+#include "NumberObject.h"
+
 using std::string;
 using std::vector;
 
@@ -11,10 +12,11 @@ public:
 	static bool test();
 
 	Integer();
-	Integer(vector<int> Int);
+	Integer(string);
+	Integer(Integer&);
 
 	vector<int> Int;
-	char flag;
+	int flag;
 
 	Integer operator+(Integer plusInt);
 	Integer operator-(Integer diffInt);
