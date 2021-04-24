@@ -9,17 +9,17 @@
 using namespace std;
 
 bool test() {
-	map<string, bool(*)()> tests{
-		{"Integer" , &(Integer::test)},
-		{"Decimal" , &(Decimal::test)}
-	};
 	bool test_pass = true;
-	for (const auto& f : tests) {
-		if (!(*f.second)()) {
-			cout << "Test " << f.first << " fail." << endl;
-			test_pass = false;
-		}
+
+	if (!Integer::test()) {
+		cout << "Test Integer fail." << endl;
+		test_pass = false;
 	}
+	if (!Decimal::test()) {
+		cout << "Test Decimal fail." << endl;
+		test_pass = false;
+	}
+
 	return test_pass;
 }
 
