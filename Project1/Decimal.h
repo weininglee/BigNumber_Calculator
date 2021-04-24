@@ -4,7 +4,32 @@
 
 class Decimal : NumberObject {
 public:
-	static bool test() {
-		return true;
-	}
+
+	Integer denominator, numerator;
+	Decimal power;
+
+	Decimal();
+	Decimal(string);
+	Decimal(Decimal&);
+
+	Decimal operator+(Decimal);
+	Decimal operator-(Decimal);
+	Decimal operator*(Decimal);
+	Decimal operator/(Decimal);
+	Decimal operator+=(Decimal);
+	Decimal operator-=(Decimal);
+	Decimal operator*=(Decimal);
+	Decimal operator/=(Decimal);
+	Decimal operator-();
+	Decimal& operator=(Decimal);
+	bool operator>(Decimal);
+	bool operator<(Decimal);
+	bool operator>=(Decimal);
+	bool operator<=(Decimal);
+	bool operator==(Decimal);
+	bool operator!=(Decimal);
+	friend istream& operator>>(istream&, Decimal&);
+	friend ostream& operator<<(ostream&, Decimal&);
+
+	static bool test();
 };
