@@ -161,15 +161,17 @@ Integer Integer::operator-(Integer diffInt) {
 	}
 
 	for (int i = difference.Int.size() - 1; i > 0; i--) {
-		if (i == 1) {
 
-		}
 		if (difference.Int[i] == 0) {
 			difference.Int.erase(difference.Int.begin() + i);
 		}
 		else {
 			break;
 		}
+	}
+
+	if ((*this) == diffInt) {
+		difference.Int.push_back(0);
 	}
 
 	return difference;
@@ -185,28 +187,69 @@ bool Integer::operator>(Integer compareInt) {
 	if (flag == 1 && compareInt.flag == -1) return true;
 	if (flag == -1 && compareInt.flag == 1) return false;
 	if (Int.size() > compareInt.Int.size()) return true;
-	
+	if (Int.size() < compareInt.Int.size()) return false;
+
+	for (int i = Int.size() - 1; i >= 0; i--) {
+		if (Int[i] > compareInt.Int[i]) return true;
+		if (Int[i] < compareInt.Int[i]) return false;
+	}
+	return false; // ==
 }
 
-/*bool Integer::operator<(Integer compareInt) {
+bool Integer::operator<(Integer compareInt) {
+	if (flag == 1 && compareInt.flag == -1) return false;
+	if (flag == -1 && compareInt.flag == 1) return true;
+	if (Int.size() > compareInt.Int.size()) return false;
+	if (Int.size() < compareInt.Int.size()) return true;
 
+	for (int i = Int.size() - 1; i >= 0; i--) {
+		if (Int[i] > compareInt.Int[i]) return false;
+		if (Int[i] < compareInt.Int[i]) return true;
+	}
+	return false; // ==
 }
 
 bool Integer::operator>=(Integer compareInt) {
+	if (flag == 1 && compareInt.flag == -1) return true;
+	if (flag == -1 && compareInt.flag == 1) return false;
+	if (Int.size() > compareInt.Int.size()) return true;
+	if (Int.size() < compareInt.Int.size()) return false;
 
+	for (int i = Int.size() - 1; i >= 0; i--) {
+		if (Int[i] > compareInt.Int[i]) return true;
+		if (Int[i] < compareInt.Int[i]) return false;
+	}
+	return true; // ==
 }
 
 bool Integer::operator<=(Integer compareInt) {
+	if (flag == 1 && compareInt.flag == -1) return false;
+	if (flag == -1 && compareInt.flag == 1) return true;
+	if (Int.size() > compareInt.Int.size()) return false;
+	if (Int.size() < compareInt.Int.size()) return true;
 
+	for (int i = Int.size() - 1; i >= 0; i--) {
+		if (Int[i] > compareInt.Int[i]) return false;
+		if (Int[i] < compareInt.Int[i]) return true;
+	}
+	return true; // ==
 }
 
 bool Integer::operator==(Integer compareInt) {
+	if (flag != compareInt.flag) return false;
+	if (Int.size() != compareInt.Int.size()) return false;
 
+	for (int i = Int.size() - 1; i >= 0; i--) {
+		if (Int[i] != compareInt.Int[i]) return false;
+	}
+
+	return true; // ==
 }
 
 bool Integer::operator!=(Integer compareInt) {
-
-}*/
+	if (*this == compareInt) return false;
+	return true;
+}
 
 Integer& Integer::operator=(Integer& assignInt) {
 	flag = assignInt.flag;
