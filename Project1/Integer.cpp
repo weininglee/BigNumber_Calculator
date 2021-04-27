@@ -279,6 +279,15 @@ Integer& Integer::operator/=(Integer divInt) {
 	return *this;
 }
 
+Integer Integer::factorial(Integer fac) {
+	fac.flag = 1;
+	Integer plus("1");
+	for (Integer count("1"); count < fac; count += plus) {
+		fac *= count;
+	}
+	return fac;
+}
+
 bool Integer::test() {
 	bool test_pass = true;
 	

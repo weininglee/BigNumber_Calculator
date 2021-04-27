@@ -36,6 +36,7 @@ public:
 	Integer& operator=(Integer&& assignInt);
 	//friend istr
 
+	Integer factorial(Integer fac);
 
 	static bool test();
 };
