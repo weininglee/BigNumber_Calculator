@@ -6,7 +6,7 @@ class Decimal : NumberObject {
 public:
 
 	Integer denominator, numerator;
-	Decimal power;
+	//Decimal power;
 
 	Decimal();
 	Decimal(string);
@@ -28,8 +28,8 @@ public:
 	bool operator<=(Decimal);
 	bool operator==(Decimal);
 	bool operator!=(Decimal);
-	friend istream& operator>>(istream&, Decimal&);
-	friend ostream& operator<<(ostream&, Decimal&);
-
-	static bool test();
+	//friend istream& operator>>(istream&, Decimal&);
+	//friend ostream& operator<<(ostream&, Decimal&);
+	
+	static bool test() { return false; }
 };

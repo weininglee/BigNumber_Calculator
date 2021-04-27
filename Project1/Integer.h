@@ -21,6 +21,7 @@ public:
 	Integer operator+(Integer plusInt);
 	Integer operator-(Integer diffInt);
 	Integer operator*(Integer multiInt);
+	Integer operator/(Integer divInt);
 	bool operator>(Integer compareInt);
 	bool operator<(Integer compareInt);
 	bool operator>=(Integer compareInt);
@@ -30,8 +31,11 @@ public:
 	Integer& operator+=(Integer plusInt);
 	Integer& operator-=(Integer diffInt);
 	Integer& operator*=(Integer multiInt);
-	//Integer& operator/=(Integer Int);
-	Integer& operator=(Integer assignInt);
+	Integer& operator/=(Integer Int);
+	Integer& operator=(Integer& assignInt);
+	Integer& operator=(Integer&& assignInt);
+	//friend istr
+
 
 	static bool test();
 };
