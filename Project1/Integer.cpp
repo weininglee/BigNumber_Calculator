@@ -162,15 +162,15 @@ Integer Integer::operator*(Integer multiInt) {
 	Integer product;
 
 	if ((Int.size() == 1 && Int[0] == 0) || (multiInt.Int.size() == 1 && multiInt.Int[0] == 0)) {
-		product.flag = 1;
-		product.Int.push_back(0);
+		//product.flag = 1;
+		//product.Int.push_back(0);
 		return product;
 	}
 
 	if (flag == multiInt.flag) product.flag = 1;
 	else product.flag = -1;
 
-	for (int indextotal = 0; indextotal < Int.size() + multiInt.Int.size() - 1; indextotal++) {
+	for (int indextotal = 0; indextotal < Int.size() + multiInt.Int.size() - 2; indextotal++) {
 		product.Int.push_back(0);
 	}
 
