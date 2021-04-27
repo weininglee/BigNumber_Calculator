@@ -20,7 +20,7 @@ public:
 	
 	Integer operator+(Integer plusInt);
 	Integer operator-(Integer diffInt);
-	//Integer operator*(Integer multiInt);
+	Integer operator*(Integer multiInt);
 	bool operator>(Integer compareInt);
 	bool operator<(Integer compareInt);
 	bool operator>=(Integer compareInt);
@@ -29,7 +29,7 @@ public:
 	bool operator!=(Integer compareInt);
 	Integer& operator+=(Integer plusInt);
 	Integer& operator-=(Integer diffInt);
-	//Integer& operator*=(Integer multiInt);
+	Integer& operator*=(Integer multiInt);
 	//Integer& operator/=(Integer Int);
 	Integer& operator=(Integer assignInt);
 

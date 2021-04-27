@@ -207,11 +207,42 @@ Integer Integer::operator-(Integer diffInt) {
 	return difference;
 }
 
-/*Integer Integer::operator*(Integer multiInt) {
+Integer Integer::operator*(Integer multiInt) {
 	Integer product;
 
+	if ((Int.size() == 1 && Int[0] == 0) || (multiInt.Int.size() == 1 && multiInt.Int[0] == 0)) {
+		product.flag = 1;
+		product.Int.push_back(0);
+		return product;
+	}
+
+	if (flag == multiInt.flag) product.flag = 1;
+	else product.flag = -1;
+
+	for (int indextotal = 0; indextotal < Int.size() + multiInt.Int.size() - 1; indextotal++) {
+		product.Int.push_back(0);
+	}
+
+	for (int indexsecond = 0; indexsecond < multiInt.Int.size(); indexsecond++) {
+		for (int index = 0; index < Int.size(); index++) {
+			product.Int[index + indexsecond] += (Int[index] * multiInt.Int[indexsecond]);
+		}
+	}
+
+	int plus = 0;
+	for (int indextotal = 0; indextotal < Int.size() + multiInt.Int.size() - 1; indextotal++) {
+		int x = (product.Int[indextotal] + plus);
+		product.Int[indextotal] = x % 10;
+		plus = x / 10;
+	}
+	
+	if (plus) {
+		product.Int.push_back(plus % 10);
+		plus /= 10;
+	}
+
 	return product;
-}*/
+}
 
 bool Integer::operator>(Integer compareInt) {
 	if (flag == 1 && compareInt.flag == -1) return true;
@@ -430,10 +461,12 @@ Integer& Integer::operator-=(Integer diffInt) {
 	return *this;
 }
 
-/*Integer& Integer::operator*=(Integer multiInt) {
+Integer& Integer::operator*=(Integer multiInt) {
 
+	(*this) = (*this) * multiInt;
+	return *this;
 }
 
-Integer& Integer::operator/=(Integer Int) {
+/*Integer& Integer::operator/=(Integer Int) {
 
 }*/
