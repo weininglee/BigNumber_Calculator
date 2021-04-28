@@ -293,6 +293,19 @@ Integer Integer::factorial(Integer fac) {
 	return fac;
 }
 
+//integer input
+istream& operator>>(istream& in, Integer& to) 
+{
+	return in;
+}
+
+
+//integer output
+ostream& operator>>(ostream& out, Integer& to)
+{
+	return out;
+}
+
 bool Integer::test() {
 	bool test_pass = true;
 	
