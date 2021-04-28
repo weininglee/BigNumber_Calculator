@@ -38,7 +38,8 @@ public:
 	friend istream& operator>>(istream&, Integer&);
 	friend ostream& operator<<(ostream&, Integer&);
 
-	Integer factorial(Integer fac);
+	static Integer factorial(Integer fac);
+	static Integer intPowor(Integer lower, Integer upper);
 
 	static bool test();
 };

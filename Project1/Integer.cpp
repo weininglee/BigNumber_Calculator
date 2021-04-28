@@ -293,6 +293,18 @@ Integer Integer::factorial(Integer fac) {
 	return fac;
 }
 
+Integer Integer::intPowor(Integer lower, Integer upper) {
+	//if (lower.flag = -1 && upper.Int[0] % 2 == 0) lower.flag = 1;
+	//else lower.flag = -1;
+	Integer plus("1");
+	Integer multi = lower;
+	//multi.flag = 1;
+	for (Integer count("1"); count < upper; count += plus) {
+	lower *= multi;
+	}
+	return lower;
+}
+
 bool Integer::test() {
 	bool test_pass = true;
 	
@@ -356,6 +368,15 @@ bool Integer::test() {
 	}
 	if ((a * b) != Integer("333333333333333333333333333333333333333333333333333333333333333333333333333333332666666666666666666666666666666666666666666666666666666666666666666666666666666667")) {
 		cout << "a * b fail" << endl;
+		test_pass = false;
+	}
+
+	// test factorial
+	Integer f("5");
+	Integer ffac("120");
+	Integer fac = factorial(f);
+	if (fac != ffac) {
+		cout << "factorial 5! fail" << endl;
 		test_pass = false;
 	}
 
