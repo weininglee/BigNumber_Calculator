@@ -305,6 +305,19 @@ Integer Integer::intPowor(Integer lower, Integer upper) {
 	return lower;
 }
 
+//integer input
+istream& operator>>(istream& in, Integer& to) 
+{
+	return in;
+}
+
+
+//integer output
+ostream& operator>>(ostream& out, Integer& to)
+{
+	return out;
+}
+
 bool Integer::test() {
 	bool test_pass = true;
 	

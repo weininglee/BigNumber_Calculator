@@ -6,6 +6,8 @@
 
 using std::string;
 using std::vector;
+using std::istream;
+using std::ostream;
 
 class Integer : NumberObject {
 public:
