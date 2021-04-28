@@ -16,6 +16,7 @@ public:
 	Integer();
 	Integer(string);
 	Integer(Integer&);
+	Integer(Integer&&);
 
 	
 	Integer operator+(Integer plusInt);

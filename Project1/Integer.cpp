@@ -26,6 +26,11 @@ Integer::Integer(Integer& from) {
 	Int = from.Int;
 }
 
+Integer::Integer(Integer&& from) {
+	flag = from.flag;
+	Int = from.Int;
+}
+
 Integer Integer::operator+(Integer plusInt) {
 	
 	int plus = 0, index = 0;
@@ -275,7 +280,7 @@ Integer& Integer::operator*=(Integer multiInt) {
 }
 
 Integer& Integer::operator/=(Integer divInt) {
-	(*this) = (*this) / divInt;
+	//(*this) = (*this) / divInt;
 	return *this;
 }
 
@@ -292,17 +297,56 @@ bool Integer::test() {
 	bool test_pass = true;
 	
 	// test constructors
+	Integer t;
 	Integer a("999999999999999999999999999999999999999999999999999999999999999999999999999999999"),
-		b("333333333333333333333333333333333333333333333333333333333333333333333333333333333"),c;
+		b("333333333333333333333333333333333333333333333333333333333333333333333333333333333");
 	Integer d = a;
+	t = Integer("3");
+
 	d += d;
-	/*if (d == a) {
+	if (d == a) {
 		cout << "copy fail" << endl;
 		test_pass = false;
-	}*/
+	}
+	d = a;
+
+	// test compare
+	if (!(a > b)) {
+		cout << "> fail" << endl;
+		test_pass = false;
+	}
+	if (!(b < a)) {
+		cout << "< fail" << endl;
+		test_pass = false;
+	}
+	if (!(d == a)) {
+		cout << "== fail" << endl;
+		test_pass = false;
+	}
+	if (!(a >= b)) {
+		cout << ">= fail" << endl;
+		test_pass = false;
+	}
+	if (!(b <= a)) {
+		cout << "<= fail" << endl;
+		test_pass = false;
+	}
+	if (!(a != b)) {
+		cout << "!= fail" << endl;
+		test_pass = false;
+	}
+
+	// test assign operator
+	d = Integer("10000");
+	t = d;
+	if (!(t == Integer("10000"))) {
+		cout << "= fail" << endl;
+		test_pass = false;
+	}
+
 
 	// test operators
-	/*if ((a + b) != Integer("1333333333333333333333333333333333333333333333333333333333333333333333333333333332")) {
+	if ((a + b) != Integer("1333333333333333333333333333333333333333333333333333333333333333333333333333333332")) {
 		cout << "a + b fail" << endl;
 		test_pass = false;
 	}
@@ -313,7 +357,7 @@ bool Integer::test() {
 	if ((a * b) != Integer("333333333333333333333333333333333333333333333333333333333333333333333333333333332666666666666666666666666666666666666666666666666666666666666666666666666666666667")) {
 		cout << "a * b fail" << endl;
 		test_pass = false;
-	}*/
+	}
 
 	return test_pass;
 }
