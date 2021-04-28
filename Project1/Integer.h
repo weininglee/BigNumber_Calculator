@@ -35,7 +35,8 @@ public:
 	Integer& operator/=(Integer Int);
 	Integer& operator=(Integer& assignInt);
 	Integer& operator=(Integer&& assignInt);
-	//friend istr
+	friend istream& operator>>(istream&, Integer&);
+	friend ostream& operator<<(ostream&, Integer&);
 
 	Integer factorial(Integer fac);
 
