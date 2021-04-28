@@ -64,7 +64,7 @@ Integer Integer::operator+(Integer plusInt) {
 Integer Integer::operator-(Integer diffInt) {
 
 	int minus = 0, index = 0;
-	if (Int.size() > diffInt.Int.size()) {
+	if ((*this) > diffInt) {
 		flag = 1; // flag = '+'
 		for (index; index < diffInt.Int.size(); index++) {
 			int x;
@@ -89,7 +89,7 @@ Integer Integer::operator-(Integer diffInt) {
 			}
 		}
 	}
-	else if (Int.size() < diffInt.Int.size()) {
+	else if ((*this) < diffInt) {
 		flag = -1; // flag = '-'
 		for (index; index < Int.size(); index++) {
 			if (diffInt.Int[index] - Int[index] - minus < 0) {
@@ -114,36 +114,9 @@ Integer Integer::operator-(Integer diffInt) {
 		}
 	}
 	else {
-		for (int i = Int.size() - 1; i > 0; i--) {
-			if (Int[i] > diffInt.Int[i]) {
-				flag = 1;
-				for (index; index < diffInt.Int.size(); index++) {
-					if (Int[index] - diffInt.Int[index] - minus < 0) {
-						diffInt.Int[index] = 10 + Int[index] - diffInt.Int[index] - minus;
-						minus = 1;
-					}
-					else {
-						diffInt.Int[index] = Int[index] - diffInt.Int[index] - minus;
-						minus = 0;
-					}
-				}
-				break;
-			}
-			else if (Int[i] < diffInt.Int[i]) {
-				flag = -1;
-				for (index; index < Int.size(); index++) {
-					if (diffInt.Int[index] - Int[index] - minus < 0) {
-						diffInt.Int[index] = 10 + diffInt.Int[index] - Int[index] - minus;
-						minus = 1;
-					}
-					else {
-						diffInt.Int[index] = diffInt.Int[index] - Int[index] - minus;
-						minus = 0;
-					}
-				}
-				break;
-			}
-		}
+		diffInt.flag = 1;
+		diffInt.Int.clear();
+		diffInt.Int.push_back(0);
 	}
 
 	for (int i = diffInt.Int.size() - 1; i > 0; i--) {
@@ -154,10 +127,6 @@ Integer Integer::operator-(Integer diffInt) {
 		else {
 			break;
 		}
-	}
-
-	if ((*this) == diffInt) {
-		diffInt.Int.push_back(0);
 	}
 
 	return diffInt;
