@@ -35,7 +35,7 @@ Integer::Integer(Integer&& from) {
 }
 
 Integer Integer::operator+(Integer plusInt) {
-	
+
 	int plus = 0, index = 0;
 	for (index; index < std::min(Int.size(), plusInt.Int.size()); index++) {
 
@@ -60,17 +60,40 @@ Integer Integer::operator+(Integer plusInt) {
 	if (plus) {
 		plusInt.Int.push_back(plus);
 	}
-	
+
 	return plusInt;
 }
 
 Integer Integer::operator-(Integer diffInt) {
-
-	int minus = 0, index = 0;
-	if ((*this) > diffInt) {
-		flag = 1; // flag = '+'
-		for (index; index < diffInt.Int.size(); index++) {
-			int x;
+	if (flag == -1 && diffInt.flag == -1) {
+		Integer a = (*this);
+		a.flag = 1;
+		diffInt.flag = 1;
+		return diffInt - a;
+	}
+	else if (flag == 1 && diffInt.flag == -1)
+	{
+		diffInt.flag = 1;
+		return (*this) + diffInt;
+	}
+	else if (flag == -1 && diffInt.flag == 1)
+	{
+		Integer a = (*this);
+		a.flag = 1;
+		a += diffInt;
+		a.flag = -1;
+		return a;
+	}
+	else if( *this < diffInt)
+	{
+		diffInt -= (*this);
+		diffInt.flag = -1;
+		return diffInt;
+	}
+	else
+	{
+		int minus = 0, index = 0;
+		for (; index < diffInt.Int.size(); index++) {
 			if (Int[index] - diffInt.Int[index] - minus < 0) {
 				diffInt.Int[index] = 10 + Int[index] - diffInt.Int[index] - minus; // x = each digit difference
 				minus = 1;
@@ -78,61 +101,26 @@ Integer Integer::operator-(Integer diffInt) {
 			else {
 				diffInt.Int[index] = Int[index] - diffInt.Int[index] - minus;
 				minus = 0;
-			}			
+			}
 		}
 
 		for (index = diffInt.Int.size(); index < Int.size(); index++) {
 			if (Int[index] - minus < 0) {
-				diffInt.Int[index] = 10 + Int[index] - minus;
+				diffInt.Int.push_back(10 + Int[index] - minus);
 				minus = 1;
 			}
 			else {
-				diffInt.Int[index] = Int[index] - minus;
-				minus = 0;
-			}
-		}
-	}
-	else if ((*this) < diffInt) {
-		flag = -1; // flag = '-'
-		for (index; index < Int.size(); index++) {
-			if (diffInt.Int[index] - Int[index] - minus < 0) {
-				diffInt.Int[index] = 10 + diffInt.Int[index] - Int[index] - minus;
-				minus = 1;
-			}
-			else {
-				diffInt.Int[index] = diffInt.Int[index] - Int[index] - minus;
+				diffInt.Int.push_back(Int[index] - minus);
 				minus = 0;
 			}
 		}
 
-		for (index = Int.size(); index < diffInt.Int.size(); index++) {
-			if (diffInt.Int[index] - minus < 0) {
-				diffInt.Int[index] = 10 + diffInt.Int[index] - minus;
-				minus = 1;
-			}
-			else {
-				diffInt.Int[index] = diffInt.Int[index] - minus;
-				minus = 0;
-			}
+		for (int i = diffInt.Int.size() - 1; i > 0; i--) {
+			if (diffInt.Int[i])break;
+			diffInt.Int.pop_back();
 		}
+		return diffInt;
 	}
-	else {
-		diffInt.flag = 1;
-		diffInt.Int.clear();
-		diffInt.Int.push_back(0);
-	}
-
-	for (int i = diffInt.Int.size() - 1; i > 0; i--) {
-
-		if (diffInt.Int[i] == 0) {
-			diffInt.Int.erase(diffInt.Int.begin() + i);
-		}
-		else {
-			break;
-		}
-	}
-
-	return diffInt;
 }
 
 Integer Integer::operator*(Integer multiInt) {
@@ -163,7 +151,7 @@ Integer Integer::operator*(Integer multiInt) {
 		product.Int[indextotal] = x % 10;
 		plus = x / 10;
 	}
-	
+
 	if (plus) {
 		product.Int.push_back(plus % 10);
 		plus /= 10;
@@ -173,7 +161,7 @@ Integer Integer::operator*(Integer multiInt) {
 }
 
 Integer Integer::operator/(Integer div) {
-	Integer q("0"), a = (*this),one("1");
+	Integer q("0"), a = (*this), one("1");
 	int q_flag = flag * div.flag;
 
 	while (a >= div) {
@@ -213,7 +201,7 @@ bool Integer::operator<(Integer compareInt) {
 
 bool Integer::operator>=(Integer compareInt) {
 	if ((*this) < compareInt) return false;
-	return true; 
+	return true;
 }
 
 bool Integer::operator<=(Integer compareInt) {
@@ -270,10 +258,9 @@ Integer& Integer::operator/=(Integer divInt) {
 }
 
 Integer Integer::factorial(Integer fac) {
-	fac.flag = 1;
-	Integer plus("1");
-	for (Integer count("1"); count < fac; count += plus) {
-		fac *= count;
+	Integer one("1");
+	for (Integer i = fac - one; i > one; i -= one) {
+		fac *= i;
 	}
 	return fac;
 }
@@ -285,13 +272,13 @@ Integer Integer::intPowor(Integer lower, Integer upper) {
 	Integer multi = lower;
 	//multi.flag = 1;
 	for (Integer count("1"); count < upper; count += plus) {
-	lower *= multi;
+		lower *= multi;
 	}
 	return lower;
 }
 
 //integer input
-istream& operator>>(istream& in, Integer& to) 
+istream& operator>>(istream& in, Integer& to)
 {
 	return in;
 }
@@ -305,7 +292,7 @@ ostream& operator>>(ostream& out, Integer to)
 
 bool Integer::test() {
 	bool test_pass = true;
-	
+
 	// test constructors
 	Integer t;
 	Integer a("999999999999999999999999999999999999999999999999999999999999999999999999999999999"),
@@ -360,7 +347,9 @@ bool Integer::test() {
 		cout << "a + b fail" << endl;
 		test_pass = false;
 	}
-	if ((a - b) != Integer("666666666666666666666666666666666666666666666666666666666666666666666666666666666")) {
+	if (!((a - b) == Integer("666666666666666666666666666666666666666666666666666666666666666666666666666666666") &&
+		Integer("100000000000000000000000000000000000000000000000000000000000000000000000000000")
+		- Integer("9") == Integer("99999999999999999999999999999999999999999999999999999999999999999999999999991"))) {
 		cout << "a - b fail" << endl;
 		test_pass = false;
 	}
