@@ -1,5 +1,8 @@
 #include "Integer.h"
-using std::reverse;
+#include <iostream>
+
+using std::cout;
+using std::endl;
 
 Integer::Integer() {
 	flag = 1;
@@ -169,6 +172,19 @@ Integer Integer::operator*(Integer multiInt) {
 	return product;
 }
 
+Integer Integer::operator/(Integer div) {
+	Integer q("0"), a = (*this),one("1");
+	int q_flag = flag * div.flag;
+
+	while (a >= div) {
+		a -= div;
+		q += one;
+	}
+
+	q.flag = q_flag;
+	return q;
+}
+
 bool Integer::operator>(Integer compareInt) {
 	if (flag == 1 && compareInt.flag == -1) return true;
 	if (flag == -1 && compareInt.flag == 1) return false;
@@ -249,7 +265,7 @@ Integer& Integer::operator*=(Integer multiInt) {
 }
 
 Integer& Integer::operator/=(Integer divInt) {
-	//(*this) = (*this) / divInt;
+	(*this) = (*this) / divInt;
 	return *this;
 }
 
@@ -282,7 +298,7 @@ istream& operator>>(istream& in, Integer& to)
 
 
 //integer output
-ostream& operator>>(ostream& out, Integer& to)
+ostream& operator>>(ostream& out, Integer to)
 {
 	return out;
 }
@@ -350,6 +366,11 @@ bool Integer::test() {
 	}
 	if ((a * b) != Integer("333333333333333333333333333333333333333333333333333333333333333333333333333333332666666666666666666666666666666666666666666666666666666666666666666666666666666667")) {
 		cout << "a * b fail" << endl;
+		test_pass = false;
+	}
+	if (!(a / b == Integer("3") &&
+		Integer("5") / Integer("2") == Integer("2"))) {
+		cout << "a / b fail" << endl;
 		test_pass = false;
 	}
 

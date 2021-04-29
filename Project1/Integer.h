@@ -9,7 +9,7 @@ using std::vector;
 using std::istream;
 using std::ostream;
 
-class Integer : NumberObject {
+class Integer : public NumberObject {
 public:
 	
 	vector<int> Int;
@@ -38,7 +38,7 @@ public:
 	Integer& operator=(Integer& assignInt);
 	Integer& operator=(Integer&& assignInt);
 	friend istream& operator>>(istream&, Integer&);
-	friend ostream& operator<<(ostream&, Integer&);
+	friend ostream& operator<<(ostream&, Integer);
 
 	static Integer factorial(Integer fac);
 	static Integer intPowor(Integer lower, Integer upper);
