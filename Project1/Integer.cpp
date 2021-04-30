@@ -288,12 +288,10 @@ Integer Integer::factorial(Integer fac) {
 }
 
 Integer Integer::intPowor(Integer lower, Integer upper) {
-	//if (lower.flag = -1 && upper.Int[0] % 2 == 0) lower.flag = 1;
-	//else lower.flag = -1;
-	Integer plus("1");
+
+	Integer one("1");
 	Integer multi = lower;
-	//multi.flag = 1;
-	for (Integer count("1"); count < upper; count += plus) {
+	for (Integer count = upper; count > one; count -= one) {
 		lower *= multi;
 	}
 	return lower;
