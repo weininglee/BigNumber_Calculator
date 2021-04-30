@@ -28,7 +28,7 @@ public:
 			ci << cmd;
 			Integer a, b;
 			ci >> a >> b;
-			cout << "+=" << a + b << " -=" << a - b << " *=" << a * b /*<< " /=" << a / b */<< endl;
+			cout << "+= " << a + b << " -= " << a - b << " *= " << a * b /*<< " /=" << a / b */<< endl;
 			
 			cout << prefix;
 		}

@@ -292,9 +292,20 @@ ostream& operator<<(ostream& out, Integer to)
 {
 	if (to.flag == -1)
 		out << '-';
-	for (int i = to.Int.size()-1; i >= 0; i--)
+	int j = (to.Int.size() - 1) % 3 + 1;
+	for (int i = to.Int.size() - 1; i >= 0; i--)
 	{
+		if (i != to.Int.size() - 1)
+		{
+			while (j == 0)
+			{
+				out << ',';
+				j = 3;
+			}		
+		}
+		
 		out << to.Int[i];
+		j--;
 	}
 	return out;
 }
