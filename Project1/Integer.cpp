@@ -36,32 +36,54 @@ Integer::Integer(Integer&& from) {
 
 Integer Integer::operator+(Integer plusInt) {
 
-	int plus = 0, index = 0;
-	for (index; index < std::min(Int.size(), plusInt.Int.size()); index++) {
+	if (flag == -1 && plusInt.flag == -1) {
+		Integer a = (*this);
+		a.flag = 1;
+		plusInt.flag = 1;
+		a += plusInt;
+		a.flag = -1;
+		return a;
+	}
+	else if (flag == 1 && plusInt.flag == -1)
+	{
+		plusInt.flag = 1;
+		return (*this) - plusInt;
+	}
+	else if (flag == -1 && plusInt.flag == 1)
+	{
+		Integer a = (*this);
+		a.flag = 1;
+		return plusInt - a;
+	}
+	else
+	{
+		int plus = 0, index = 0;
+		for (index; index < std::min(Int.size(), plusInt.Int.size()); index++) {
 
-		int x = Int[index] + plusInt.Int[index] + plus; // x = each digit sum
-		plusInt.Int[index] = x % 10;
-		plus = x / 10;
-	}
-	if (Int.size() > plusInt.Int.size()) {
-		for (index = plusInt.Int.size(); index < Int.size(); index++) {
-			int x = Int[index] + plus;
-			plusInt.Int.push_back(x % 10);
-			plus = x / 10;
-		}
-	}
-	else if (Int.size() < plusInt.Int.size()) {
-		for (index = Int.size(); index < plusInt.Int.size(); index++) {
-			int x = plusInt.Int[index] + plus;
+			int x = Int[index] + plusInt.Int[index] + plus; // x = each digit sum
 			plusInt.Int[index] = x % 10;
 			plus = x / 10;
 		}
-	}
-	if (plus) {
-		plusInt.Int.push_back(plus);
-	}
+		if (Int.size() > plusInt.Int.size()) {
+			for (index = plusInt.Int.size(); index < Int.size(); index++) {
+				int x = Int[index] + plus;
+				plusInt.Int.push_back(x % 10);
+				plus = x / 10;
+			}
+		}
+		else if (Int.size() < plusInt.Int.size()) {
+			for (index = Int.size(); index < plusInt.Int.size(); index++) {
+				int x = plusInt.Int[index] + plus;
+				plusInt.Int[index] = x % 10;
+				plus = x / 10;
+			}
+		}
+		if (plus) {
+			plusInt.Int.push_back(plus);
+		}
 
-	return plusInt;
+		return plusInt;
+	}
 }
 
 Integer Integer::operator-(Integer diffInt) {
