@@ -280,13 +280,22 @@ Integer Integer::intPowor(Integer lower, Integer upper) {
 //integer input
 istream& operator>>(istream& in, Integer& to)
 {
+	string A;
+	in >> A;
+	to = Integer(A);
 	return in;
 }
 
 
 //integer output
-ostream& operator>>(ostream& out, Integer to)
+ostream& operator<<(ostream& out, Integer to)
 {
+	if (to.flag == -1)
+		out << '-';
+	for (int i = to.Int.size()-1; i >= 0; i--)
+	{
+		out << to.Int[i];
+	}
 	return out;
 }
 

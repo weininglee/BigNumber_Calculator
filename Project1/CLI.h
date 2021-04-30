@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <strstream>
 
 using std::cin;
 using std::cout;
@@ -22,7 +23,12 @@ public:
 	void loop() {
 		string cmd;
 		while (getline(cin, cmd)) {
-			cout << cmd << endl;
+			/*cout << cmd << endl;*/
+			std::strstream ci;
+			ci << cmd;
+			Integer a, b;
+			ci >> a >> b;
+			cout << "+=" << a + b << " -=" << a - b << " *=" << a * b /*<< " /=" << a / b */<< endl;
 			
 			cout << prefix;
 		}
