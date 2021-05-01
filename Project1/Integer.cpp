@@ -245,6 +245,7 @@ bool Integer::operator<=(Integer compareInt) {
 }
 
 bool Integer::operator==(Integer compareInt) {
+	if (Int.size() == 1 && compareInt.Int.size() == 1 && Int[0] == 0 && compareInt.Int[0] == 0) return true;
 	if (flag != compareInt.flag) return false;
 	if (Int.size() != compareInt.Int.size()) return false;
 
@@ -301,7 +302,12 @@ Integer Integer::factorial(Integer fac) {
 }
 
 Integer Integer::powor(Integer lower, Integer upper) {
-
+	if (upper.flag == -1) {
+		lower.flag = 1;
+		lower.Int.clear();
+		lower.Int.push_back(0);
+		return lower;
+	}
 	Integer one("1");
 	Integer multi = lower;
 	for (Integer count = upper; count > one; count -= one) {

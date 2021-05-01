@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Decimal.cpp" />
     <ClCompile Include="Calculator.cpp" />
     <ClCompile Include="Decimal.cpp" />
     <ClCompile Include="Integer.cpp" />

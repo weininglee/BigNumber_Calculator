@@ -21,6 +21,9 @@
     <ClCompile Include="Integer.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="Decimal.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
     <ClCompile Include="Calculator.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
