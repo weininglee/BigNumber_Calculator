@@ -245,7 +245,6 @@ bool Integer::operator<=(Integer compareInt) {
 }
 
 bool Integer::operator==(Integer compareInt) {
-
 	if (flag != compareInt.flag) return false;
 	if (Int.size() != compareInt.Int.size()) return false;
 
