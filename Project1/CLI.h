@@ -2,7 +2,8 @@
 
 #include <iostream>
 #include <string>
-#include <strstream>
+#include "Calculator.h"
+#include "NumberObject.h"
 
 using std::cin;
 using std::cout;
@@ -14,27 +15,27 @@ class CLI {
 public:
 	void start() {
 		run_once();
-		loop();
+		while (loop());
 	}
 	void run_once() {
-		cout << "Big Number Calculatot CLI" << endl
-			<< prefix;
+		cout << "Big Number Calculatot CLI" << endl;
 	}
-	void loop() {
+	bool loop() {
+		cout << prefix;
 		string cmd;
-		while (getline(cin, cmd)) {
-			/*cout << cmd << endl;*/
-			std::strstream ci;
-			ci << cmd;
-			Integer a, b;
-			ci >> a >> b;
-			cout << "+= " << a + b << endl 
-				<< "-= " << a - b << endl 
-				<< "*= " << a * b << endl
-				<< "/= " << a / b << endl;
-			
-			cout << prefix;
+		if (!getline(cin, cmd))return false;
+		if (validate()) {
+			cout << Calculator::evaluate(cmd) << endl;
 		}
+		else
+		{
+			cout << "Invalid input." << endl;
+		}
+
+		return true;
+	}
+	static bool validate() {
+		return true;
 	}
 };
 

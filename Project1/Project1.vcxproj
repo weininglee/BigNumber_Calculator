@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Calculator.cpp" />
     <ClCompile Include="Integer.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -151,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BigNum.h" />
+    <ClInclude Include="Calculator.h" />
     <ClInclude Include="CLI.h" />
     <ClInclude Include="Decimal.h" />
     <ClInclude Include="Integer.h" />
