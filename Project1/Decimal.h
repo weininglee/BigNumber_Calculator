@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Integer.h"
 
 class Decimal {
@@ -35,7 +35,7 @@ public:
 	friend ostream& operator<<(ostream& os, Decimal from);
 	
 	bool is_int();
-	void simplefy(); // ¬ù¤À
+	void simplefy(); // ï¿½ï¿½ï¿½ï¿½
 	Integer gcd(Integer a, Integer b);
 
 	static Decimal factorial(Decimal);
