@@ -301,7 +301,7 @@ Integer Integer::factorial(Integer fac) {
 	return fac;
 }
 
-Integer Integer::powor(Integer lower, Integer upper) {
+Integer Integer::power(Integer lower, Integer upper) {
 	if (upper.flag == -1) {
 		lower.flag = 1;
 		lower.Int.clear();
@@ -392,6 +392,18 @@ bool Integer::test() {
 		test_pass = false;
 	}
 
+	//test - operator
+	d = -a;
+	if (d != Integer("-999999999999999999999999999999999999999999999999999999999999999999999999999999999")) {
+		cout << "- fail" << endl;
+		test_pass = false;
+	}
+	d = -d;
+	if (d != Integer("999999999999999999999999999999999999999999999999999999999999999999999999999999999")) {
+		cout << "- fail" << endl;
+		test_pass = false;
+	}
+
 	// test assign operator
 	d = Integer("10000");
 	t = d;
@@ -429,6 +441,14 @@ bool Integer::test() {
 	Integer fac = factorial(f);
 	if (fac != ffac) {
 		cout << "factorial 5! fail" << endl;
+		test_pass = false;
+	}
+
+	// test power
+	Integer p("2");
+	Integer pp("10");
+	if (power(p, pp)!= Integer("1024")) {
+		cout << "power fail" << endl;
 		test_pass = false;
 	}
 
