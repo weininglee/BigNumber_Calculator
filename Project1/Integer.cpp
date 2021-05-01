@@ -287,7 +287,7 @@ Integer Integer::factorial(Integer fac) {
 	return fac;
 }
 
-Integer Integer::intPowor(Integer lower, Integer upper) {
+Integer Integer::powor(Integer lower, Integer upper) {
 
 	Integer one("1");
 	Integer multi = lower;

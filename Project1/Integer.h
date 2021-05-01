@@ -41,7 +41,7 @@ public:
 	friend ostream& operator<<(ostream&, Integer);
 
 	static Integer factorial(Integer fac);
-	static Integer intPowor(Integer lower, Integer upper);
+	static Integer powor(Integer lower, Integer upper);
 
 	static bool test();
 };
