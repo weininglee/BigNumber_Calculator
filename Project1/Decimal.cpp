@@ -238,7 +238,7 @@ istream& operator>>(istream& is, Decimal& to) {
 ostream& operator<<(ostream& os, Decimal from) {
 	if (from.sign == -1)
 		os << '-';
-	Integer fromInt = from.numerator / from.denominator;
+	//Integer fromInt = from.numerator / from.denominator;
 	
 	return os; 
 }
