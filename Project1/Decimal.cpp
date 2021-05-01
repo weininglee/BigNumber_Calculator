@@ -176,7 +176,7 @@ Decimal& Decimal::operator/=(Decimal divDec) {
 }
 
 Decimal Decimal::operator-() {
-	sign = -1;
+	sign *= -1;
 	return (*this);
 }
 
