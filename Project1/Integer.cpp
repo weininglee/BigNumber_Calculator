@@ -195,6 +195,12 @@ Integer Integer::operator/(Integer div) {
 	return q;
 }
 
+Integer Integer::operator%(Integer remDec) {
+	Integer a = (*this) / remDec;
+	a = (*this) - (a * remDec);
+	return a;
+}
+
 bool Integer::operator>(Integer compareInt) {
 	if (flag == 1 && compareInt.flag == -1) return true;
 	if (flag == -1 && compareInt.flag == 1) return false;

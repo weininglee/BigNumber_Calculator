@@ -25,6 +25,7 @@ public:
 	Integer operator-(Integer diffInt);
 	Integer operator*(Integer multiInt);
 	Integer operator/(Integer divInt);
+	Integer operator%(Integer remDec);
 	bool operator>(Integer compareInt);
 	bool operator<(Integer compareInt);
 	bool operator>=(Integer compareInt);
