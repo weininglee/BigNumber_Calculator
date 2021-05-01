@@ -67,6 +67,7 @@ Decimal Decimal::operator*(Decimal multiDec) {
 	else multiDec.sign = -1;
 	multiDec.numerator *= (*this).numerator;
 	multiDec.denominator *= (*this).denominator;
+	multiDec.simplefy();
 	return multiDec;
 }
 
@@ -75,6 +76,7 @@ Decimal Decimal::operator/(Decimal divDec) {
 	else divDec.sign = -1;
 	divDec.numerator = (*this).numerator * divDec.denominator;
 	divDec.denominator = (*this).denominator * divDec.numerator;
+	divDec.simplefy();
 	return divDec;
 }
 
