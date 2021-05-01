@@ -31,8 +31,8 @@ public:
 	bool operator<=(Decimal compareDec);
 	bool operator==(Decimal compareDec);
 	bool operator!=(Decimal compareDec);
-	friend istream& operator>>(istream& is, Decimal& to);// { return is; }
-	friend ostream& operator<<(ostream& os, Decimal from);// { return os; }
+	friend istream& operator>>(istream& is, Decimal& to) { return is; }
+	friend ostream& operator<<(ostream& os, Decimal from) { return os; }
 	
 	bool is_int();
 	void simplefy(); // ¬ù¤À
@@ -41,5 +41,5 @@ public:
 	static Decimal factorial(Decimal);
 	static Decimal power(Decimal, Decimal);
 
-	static bool test();// { return false; }
+	static bool test() { return false; }
 };

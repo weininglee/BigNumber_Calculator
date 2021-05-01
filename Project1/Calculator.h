@@ -21,7 +21,7 @@ public:
 
 	static vector<string> divide(string raw) {
 		for (int i = 0; i < raw.size(); i++)if (raw[i] == ' ')raw.erase(i,1);
-		if (raw[0] == '(' && raw[raw.size() - 1] == ')')raw = raw.substr(1, raw.size() - 2);
+
 		if (!raw.size())return vector<string>();
 		bool is_operatee = true;
 		vector<string> arg_list = {};
@@ -102,32 +102,11 @@ public:
 	
 	static Integer evaluate(std::string form) {
 
-		if (is_integer(form))return Integer(form);
-
 		vector<string> arg_list = divide(form);
-
-		for (int i = arg_list.size() - 1; i >= 0; i--) {
-			if (arg_list[i] == "+" || arg_list[i] == "-") {
-				string ls, rs;
-				for (int j = 0; j < i; j++)ls += arg_list[j];
-				for (int j = i + 1; j < arg_list.size(); j++)rs += arg_list[j];
-				Integer left = evaluate(ls), right = evaluate(rs);
-				if (arg_list[i] == "+")return left + right;
-				else return left - right;
-			}
-		}
 		
-		for (int i = arg_list.size() - 1; i >= 0; i--) {
-			// /0
-			if (arg_list[i] == "*" || arg_list[i] == "/") {
-				string ls, rs;
-				for (int j = 0; j < i; j++)ls += arg_list[j];
-				for (int j = i + 1; j < arg_list.size(); j++)rs += arg_list[j];
-				Integer left = evaluate(ls), right = evaluate(rs);
-				if (arg_list[i] == "*")return left * right;
-				else return left / right;
-			}
-		}
+		for (auto& i : arg_list)std::cout << i << std::endl;
+
+		return Integer("0");
 	}
 
 	static bool is_integer(string s) {

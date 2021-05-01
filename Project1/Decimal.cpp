@@ -2,9 +2,6 @@
 #include <iostream>
 #include <iomanip>
 
-using std::cout;
-using std::endl;
-
 Decimal::Decimal() {
 	sign = 1;
 	numerator.Int.push_back(0);

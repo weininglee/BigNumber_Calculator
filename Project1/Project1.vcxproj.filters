@@ -27,9 +27,6 @@
     <ClCompile Include="Calculator.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
-    <ClCompile Include="Decimal.cpp">
-      <Filter>來源檔案</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="CPP程式設計題-大數計算機.pdf" />
