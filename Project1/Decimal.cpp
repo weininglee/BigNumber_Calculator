@@ -1,6 +1,50 @@
 #include"Decimal.h"
 #include<iostream>
 
+Decimal::Decimal() {
+	sign = 1;
+	numerator.Int.push_back(0);
+	denominator.Int.push_back(1);
+	power_numerator.Int.push_back(0);
+	power_denominator.Int.push_back(1);
+}
+
+Decimal::Decimal(string s) {
+
+}
+
+Decimal::Decimal(Decimal& from) {
+	sign = from.sign;
+	numerator = from.numerator;
+	denominator = from.denominator;
+	power_numerator = from.power_numerator;
+	power_denominator = from.power_denominator;
+}
+
+Decimal::Decimal(Decimal&& from) {
+	sign = from.sign;
+	numerator = from.numerator;
+	denominator = from.denominator;
+	power_numerator = from.power_numerator;
+	power_denominator = from.power_denominator;
+}
+
+Decimal::Decimal(Integer& from) {
+	sign = from.flag;
+	numerator = from;
+	denominator = Integer("1");
+	power_numerator = from;
+	power_denominator = Integer("1");
+}
+
+Decimal::Decimal(Integer&& from) {
+	sign = from.flag;
+	numerator = from;
+	denominator = Integer("1");
+	power_numerator = from;
+	power_denominator = Integer("1");
+}
+
 Decimal Decimal::operator+(Decimal plusDec) {
 	if (sign == 1 && plusDec.sign == -1) {
 		plusDec.sign = 1;
@@ -63,8 +107,7 @@ Decimal Decimal::operator-(Decimal diffDec) {
 }
 
 Decimal Decimal::operator*(Decimal multiDec) {
-	if ((*this).sign == multiDec.sign) multiDec.sign = 1;
-	else multiDec.sign = -1;
+	multiDec.sign = (*this).sign * multiDec.sign;
 	multiDec.numerator *= (*this).numerator;
 	multiDec.denominator *= (*this).denominator;
 	multiDec.simplefy();
@@ -72,8 +115,7 @@ Decimal Decimal::operator*(Decimal multiDec) {
 }
 
 Decimal Decimal::operator/(Decimal divDec) {
-	if ((*this).sign == divDec.sign) divDec.sign = 1;
-	else divDec.sign = -1;
+	divDec.sign = (*this).sign * divDec.sign;
 	divDec.numerator = (*this).numerator * divDec.denominator;
 	divDec.denominator = (*this).denominator * divDec.numerator;
 	divDec.simplefy();
@@ -157,7 +199,9 @@ istream& operator>>(istream& is, Decimal& to) { return is; }
 ostream& operator<<(ostream& os, Decimal from) { return os; }
 
 bool Decimal::is_int() {
-
+	Integer zero("0");
+	if (numerator / denominator == zero) return true;
+	return false;
 }
 
 void Decimal::simplefy() { // ¬ù¤À
@@ -174,7 +218,14 @@ Decimal Decimal::factorial(Decimal) {
 
 }
 
-Decimal Decimal::power(Decimal, Decimal) {
+Decimal Decimal::power(Decimal lower, Decimal upper) { // upper.denominator = 1 or 2
+	Integer one("1");
+	Integer multinum = lower.numerator;
+	Integer multiden = lower.denominator;
+	for (Integer count = upper.numerator; count > one; count -= one) {
+		lower.numerator *= multinum;
+		lower.denominator *= multiden;
+	}
 
 }
 
