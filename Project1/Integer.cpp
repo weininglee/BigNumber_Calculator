@@ -203,6 +203,11 @@ Integer Integer::operator%(Integer remDec) {
 	return a;
 }
 
+Integer Integer::operator-() {
+	flag *= -1;
+	return (*this);
+}
+
 bool Integer::operator>(Integer compareInt) {
 	if (flag == 1 && compareInt.flag == -1) return true;
 	if (flag == -1 && compareInt.flag == 1) return false;
