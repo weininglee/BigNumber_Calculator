@@ -19,7 +19,6 @@ public:
 	Integer(string);
 	Integer(Integer&);
 	Integer(Integer&&);
-
 	
 	Integer operator+(Integer plusInt);
 	Integer operator-(Integer diffInt);
@@ -39,6 +38,7 @@ public:
 	Integer& operator/=(Integer Int);
 	Integer& operator=(Integer& assignInt);
 	Integer& operator=(Integer&& assignInt);
+	Integer operator-();
 	friend istream& operator>>(istream&, Integer&);
 	friend ostream& operator<<(ostream&, Integer);
 
