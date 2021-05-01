@@ -14,28 +14,29 @@ public:
 	Decimal(Integer&);
 	Decimal(Integer&&);
 
-	Decimal operator+(Decimal);
-	Decimal operator-(Decimal);
-	Decimal operator*(Decimal);
-	Decimal operator/(Decimal);
-	Decimal& operator+=(Decimal);
-	Decimal& operator-=(Decimal);
-	Decimal& operator*=(Decimal);
-	Decimal& operator/=(Decimal);
+	Decimal operator+(Decimal plusDec);
+	Decimal operator-(Decimal diffDec);
+	Decimal operator*(Decimal multiDec);
+	Decimal operator/(Decimal divDec);
+	Decimal& operator+=(Decimal plusDec);
+	Decimal& operator-=(Decimal diffDec);
+	Decimal& operator*=(Decimal multiDec);
+	Decimal& operator/=(Decimal divDec);
 	Decimal operator-();
-	Decimal& operator=(Decimal&);
-	Decimal& operator=(Decimal&&);
-	bool operator>(Decimal);
-	bool operator<(Decimal);
-	bool operator>=(Decimal);
-	bool operator<=(Decimal);
-	bool operator==(Decimal);
-	bool operator!=(Decimal);
+	Decimal& operator=(Decimal& assignDec);
+	Decimal& operator=(Decimal&& assignDec);
+	bool operator>(Decimal compareDec);
+	bool operator<(Decimal compareDec);
+	bool operator>=(Decimal compareDec);
+	bool operator<=(Decimal compareDec);
+	bool operator==(Decimal compareDec);
+	bool operator!=(Decimal compareDec);
 	friend istream& operator>>(istream& is, Decimal& to) { return is; }
 	friend ostream& operator<<(ostream& os, Decimal from) { return os; }
 	
 	bool is_int();
 	void simplefy(); // ¬ù¤À
+	Integer gcd(Integer a, Integer b);
 
 	static Decimal factorial(Decimal);
 	static Decimal power(Decimal, Decimal);
