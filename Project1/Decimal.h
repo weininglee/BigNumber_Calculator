@@ -18,11 +18,11 @@ public:
 	Decimal operator-(Decimal diffDec);
 	Decimal operator*(Decimal multiDec);
 	Decimal operator/(Decimal divDec);
+	Decimal operator-();
 	Decimal& operator+=(Decimal plusDec);
 	Decimal& operator-=(Decimal diffDec);
 	Decimal& operator*=(Decimal multiDec);
 	Decimal& operator/=(Decimal divDec);
-	Decimal operator-();
 	Decimal& operator=(Decimal& assignDec);
 	Decimal& operator=(Decimal&& assignDec);
 	bool operator>(Decimal compareDec);
@@ -31,8 +31,8 @@ public:
 	bool operator<=(Decimal compareDec);
 	bool operator==(Decimal compareDec);
 	bool operator!=(Decimal compareDec);
-	friend istream& operator>>(istream& is, Decimal& to) { return is; }
-	friend ostream& operator<<(ostream& os, Decimal from) { return os; }
+	friend istream& operator>>(istream& is, Decimal& to);
+	friend ostream& operator<<(ostream& os, Decimal from);
 	
 	bool is_int();
 	void simplefy(); // ¬ù¤À
@@ -41,5 +41,5 @@ public:
 	static Decimal factorial(Decimal);
 	static Decimal power(Decimal, Decimal);
 
-	static bool test() { return false; }
+	static bool test();
 };
