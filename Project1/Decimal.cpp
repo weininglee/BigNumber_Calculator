@@ -147,6 +147,10 @@ Decimal Decimal::operator*(Decimal multiDec) {
 	multiDec.numerator *= (*this).numerator;
 	multiDec.denominator *= (*this).denominator;
 	multiDec.simplefy();
+	if (multiDec.numerator == Integer("0")) {
+		multiDec.sign = 1;
+		multiDec.denominator = Integer("1");
+	}
 	return multiDec;
 }
 
@@ -155,6 +159,10 @@ Decimal Decimal::operator/(Decimal divDec) {
 	divDec.numerator = (*this).numerator * divDec.denominator;
 	divDec.denominator = (*this).denominator * divDec.numerator;
 	divDec.simplefy();
+	if (divDec.numerator == Integer("0")) {
+		divDec.sign = 1;
+		divDec.denominator = Integer("1");
+	}
 	return divDec;
 }
 
