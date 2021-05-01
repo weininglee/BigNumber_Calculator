@@ -185,6 +185,8 @@ Integer Integer::operator*(Integer multiInt) {
 Integer Integer::operator/(Integer div) {
 	Integer q("0"), a = (*this), one("1");
 	int q_flag = flag * div.flag;
+	a.flag = 1;
+	div.flag = 1;
 
 	while (a >= div) {
 		a -= div;
@@ -362,7 +364,7 @@ bool Integer::test() {
 		cout << "< fail" << endl;
 		test_pass = false;
 	}
-	if (!(d == a)) {
+	if (!(d == a && Integer("0") == Integer("-0"))) {
 		cout << "== fail" << endl;
 		test_pass = false;
 	}
@@ -404,7 +406,8 @@ bool Integer::test() {
 		test_pass = false;
 	}
 	if (!(a / b == Integer("3") &&
-		Integer("5") / Integer("2") == Integer("2"))) {
+		Integer("5") / Integer("2") == Integer("2") &&
+		Integer("-300") / Integer("12") == Integer("-25"))) {
 		cout << "a / b fail" << endl;
 		test_pass = false;
 	}
