@@ -455,7 +455,11 @@ bool Integer::test() {
 		test_pass = false;
 	}
 
-	//test 
+	//test %
+	if (p % pp != Integer("2")) {
+		cout << "% fail" << endl;
+		test_pass = false;
+	}
 
 	return test_pass;
 }
