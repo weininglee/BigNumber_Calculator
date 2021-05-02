@@ -292,14 +292,19 @@ void Decimal::simplefy() { // ¬ù¤À
 }
 
 Integer Decimal::gcd(Integer a, Integer b) {
-	Integer zero("0");
-	if (a == zero || b == zero) return Integer("1");
-	while (a != zero && b != zero) {
-		if (a >= b) a = a % b;
-		else if (b > a) b = b % a;
+	a.flag = 1;
+	b.flag = 1;
+	while (a != Integer("0"))
+	{
+		if(a>=b)a -= b;
+		else
+		{
+			Integer t = a;
+			a = b;
+			b = a;
+		}
 	}
-	if (a >= b) return a;
-	else return b;
+	return b;
 }
 
 Decimal Decimal::factorial(Decimal fac) {
@@ -344,7 +349,13 @@ Decimal Decimal::power(Decimal lower, Decimal upper) { // upper.denominator = 1 
 bool Decimal::test() { 
 	bool test_pass = true;
 
-	
+	//test gcd
+	if (!(gcd(Integer("960"), Integer("36")) == Integer("36") &&
+		gcd(Integer("300"), Integer("270")) != Integer("30"))) {
+		cout << "gcd fail" << endl;
+		test_pass = false;
+	}
+
 	// test constructors
 	Decimal t;
 	t = Decimal("0.0");

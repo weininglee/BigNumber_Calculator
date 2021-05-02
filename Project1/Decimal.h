@@ -36,10 +36,10 @@ public:
 	
 	bool is_int();
 	void simplefy(); 
-	Integer gcd(Integer a, Integer b);
 
 	static Decimal factorial(Decimal);
 	static Decimal power(Decimal, Decimal);
+	static Integer gcd(Integer a, Integer b);
 
 	static bool test();
 };
