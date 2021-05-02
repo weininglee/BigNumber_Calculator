@@ -269,7 +269,7 @@ ostream& operator<<(ostream& os, Decimal from) {
 	from.numerator %= from.denominator;
 
 	for (int i = 0; i < 100; i++) {
-		if (i % 3 == 0 && i)os << " ";
+		if (i % 3 == 0 && i)os << ",";
 		from.numerator *= Integer("10");
 		os << from.numerator / from.denominator;
 		from.numerator %= from.denominator;
