@@ -8,6 +8,10 @@ struct Number {
 		Integer integer;
 		Decimal decimal;
 	};
+	Number() {
+		type = INTEGER;
+		new (&integer) Integer("0");
+	};
 	Number(Integer i) {
 		type = INTEGER;
 		new (&integer) Integer(i);
@@ -40,25 +44,27 @@ struct Number {
 	};
 
 	Number& operator = (Number& n) noexcept {
+		if (type == INTEGER) integer.~Integer();
+		else decimal.~Decimal();
+
 		type = n.type;
 		if (n.type == INTEGER) {
-			decimal.~Decimal();
 			new (&integer) Integer(n.integer);
 		}
 		else {
-			integer.~Integer();
 			new (&decimal) Decimal(n.decimal);
 		}
 		return *this;
 	}
 	Number& operator = (Number&& n) noexcept {
+		if (type == INTEGER) integer.~Integer();
+		else decimal.~Decimal();
+
 		type = n.type;
 		if (n.type == INTEGER) {
-			decimal.~Decimal();
 			new (&integer) Integer(n.integer);
 		}
 		else {
-			integer.~Integer();
 			new (&decimal) Decimal(n.decimal);
 		}
 		return *this;

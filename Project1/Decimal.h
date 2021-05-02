@@ -36,6 +36,7 @@ public:
 	
 	bool is_int();
 	Decimal& simplefy(); 
+	Integer to_integer();
 
 	static Decimal factorial(Decimal);
 	static Decimal power(Decimal, Decimal);

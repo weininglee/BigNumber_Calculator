@@ -304,6 +304,12 @@ Decimal& Decimal::simplefy() { // ¬ù¤À
 	return *this;
 }
 
+Integer Decimal::to_integer() {
+	Integer r = numerator / denominator;
+	r.flag = sign;
+	return r.simplefy();
+}
+
 Integer Decimal::gcd(Integer a, Integer b) {
 	a.flag = 1;
 	b.flag = 1;
@@ -337,6 +343,8 @@ Decimal Decimal::factorial(Decimal fac) {
 		return fac;
 	}
 }
+
+
 
 Decimal Decimal::power(Decimal lower, Decimal upper) { // upper.denominator = 1 or 2
 	Integer one("1");
