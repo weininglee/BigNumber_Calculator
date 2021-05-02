@@ -13,9 +13,9 @@ using std::string;
 class CLI {
 	const string prefix = ">>> ";
 	const string unknow_error /*division_zero*/ = "無意義";
-	const string  illegal_character = "含有不合法字元";
-	const string  Power_error = "冪次須為0.5的倍數";
-	const string  variable_error = "變數名稱不可為關鍵字";
+	const string illegal_character = "含有不合法字元";
+	const string Power_error = "冪次須為0.5的倍數";
+	const string variable_error = "變數名稱不可為關鍵字";
 //含有不合法字元
 //
 //無意義
