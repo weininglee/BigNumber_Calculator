@@ -25,6 +25,8 @@ Decimal::Decimal(string s) {
 	}
 	reverse(s.begin(), s.end());
 	bool isPoint = true;
+	denominator.Int.clear();
+	numerator.Int.clear();
 	for (int i = 0; i < s.length(); i++)
 	{
 		if (s[i] == '.'){
@@ -55,10 +57,11 @@ Decimal::Decimal(string s) {
 
 	if (numerator.Int.size() == 1 && numerator.Int[0] == 0) {
 		sign = 1;
-		denominator = Integer("1");
+		denominator.Int.clear();
+		denominator.Int.push_back(1);
 	}
 	if (denominator.Int.size() == 1 && denominator.Int[0] == 0) denominator.Int[0] = 1;
-
+	//if (s=="0.0") numerator
 }
 
 Decimal::Decimal(Decimal& from) {
@@ -121,7 +124,7 @@ Decimal Decimal::operator+(Decimal plusDec) {
 			a.numerator += (plusDec.numerator * (*this).denominator);
 			a.denominator *= plusDec.denominator;
 		}
-		//a.simplefy();
+		a.simplefy();
 		return a;
 	}
 }
@@ -159,7 +162,7 @@ Decimal Decimal::operator-(Decimal diffDec) {
 			a.numerator -= (diffDec.numerator * (*this).denominator);
 			a.denominator *= diffDec.denominator;
 		}
-		//a.simplefy();
+		a.simplefy();
 		return a;
 	}
 }
@@ -168,7 +171,7 @@ Decimal Decimal::operator*(Decimal multiDec) {
 	multiDec.sign = (*this).sign * multiDec.sign;
 	multiDec.numerator *= (*this).numerator;
 	multiDec.denominator *= (*this).denominator;
-	//multiDec.simplefy();
+	multiDec.simplefy();
 	if (multiDec.numerator == Integer("0")) {
 		multiDec.sign = 1;
 		multiDec.denominator = Integer("1");
@@ -180,7 +183,7 @@ Decimal Decimal::operator/(Decimal divDec) {
 	divDec.sign = (*this).sign * divDec.sign;
 	divDec.numerator = (*this).numerator * divDec.denominator;
 	divDec.denominator = (*this).denominator * divDec.numerator;
-	//divDec.simplefy();
+	divDec.simplefy();
 	if (divDec.numerator == Integer("0")) {
 		divDec.sign = 1;
 		divDec.denominator = Integer("1");
@@ -287,8 +290,9 @@ bool Decimal::is_int() {
 }
 
 void Decimal::simplefy() { // ¬ù¤À
-	numerator /= gcd(numerator, denominator);
-	denominator /= gcd(numerator, denominator);
+	Integer a = gcd(numerator, denominator);
+	numerator /= a;
+	denominator /= a;
 }
 
 Integer Decimal::gcd(Integer a, Integer b) {
@@ -296,7 +300,7 @@ Integer Decimal::gcd(Integer a, Integer b) {
 	b.flag = 1;
 	while (a != Integer("0"))
 	{
-		if(a>=b)a -= b;
+		if(a >= b) a -= b;
 		else
 		{
 			Integer t = a;
@@ -426,24 +430,35 @@ bool Decimal::test() {
 		cout << "= fail" << endl;
 		test_pass = false;
 	}
-
+	
 	// test operators
-	if ((a + b) != Decimal("1333.333333333333333333333333333333333333333333333333333333333333333333333333333332")) {
+	Decimal i("1333.333333333333333333333333333333333333333333333333333333333333333333333333333332");
+	i.simplefy();
+	if ((a + b) != i) {
 		cout << "a + b fail" << endl;
 		test_pass = false;
 	}
-	if (!((a - b) == Decimal("666.666666666666666666666666666666666666666666666666666666666666666666666666666666") &&
+	i = Decimal("666.666666666666666666666666666666666666666666666666666666666666666666666666666666");
+	i.simplefy();
+	Decimal j("9000.00000000000000000000000000000000000000000000000000000000000000000000000001");
+	j.simplefy();
+	if (!((a - b) == i &&
 		Decimal("9000.00000000000000000000000000000000000000000000000000000000000000000000000099")
-		- Decimal ("0.00000000000000000000000000000000000000000000000000000000000000000000000098") == Integer("9000.00000000000000000000000000000000000000000000000000000000000000000000000001"))) {
+		- Decimal ("0.00000000000000000000000000000000000000000000000000000000000000000000000098") == j)) {
 		cout << "a - b fail" << endl;
 		test_pass = false;
 	}
-	if ((a * b) != Decimal("333333.333333333333333333333333333333333333333333333333333333333333333333333333332666666666666666666666666666666666666666666666666666666666666666666666666666666667")) {
+
+
+	i = Decimal("333333.333333333333333333333333333333333333333333333333333333333333333333333333332666666666666666666666666666666666666666666666666666666666666666666666666666666667");
+	i.simplefy();
+	if ((a * b) != i) {
 		cout << "a * b fail" << endl;
 		test_pass = false;
 	}
-	if (!(a / b == Decimal("3.0") &&
-		Decimal("24.24") / Decimal("0.12") == Decimal("202") &&
+	i = Decimal("3.0");
+	if (!(a / b == i &&
+		Decimal("24.24") / Decimal("0.12") == Decimal("202.0") &&
 		Decimal("-9999999999.9999999999") / Decimal("3333333333.3333333333") == Decimal("-3"))) {
 		cout << "a / b fail" << endl;
 		test_pass = false;
