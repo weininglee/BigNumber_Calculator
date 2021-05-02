@@ -53,7 +53,12 @@ Decimal::Decimal(string s) {
 		else break;
 	}
 
+	if (numerator.Int.size() == 1 && numerator.Int[0] == 0) {
+		sign = 1;
+		denominator = Integer("1");
+	}
 	if (denominator.Int.size() == 1 && denominator.Int[0] == 0) denominator.Int[0] = 1;
+
 }
 
 Decimal::Decimal(Decimal& from) {
@@ -108,10 +113,15 @@ Decimal Decimal::operator+(Decimal plusDec) {
 	}
 	else {
 		Decimal a = (*this);
-		a.numerator *= plusDec.denominator;
-		a.numerator += (plusDec.numerator * (*this).denominator);
-		a.denominator *= plusDec.denominator;
-		a.simplefy();
+		if (a.denominator == plusDec.denominator) {
+			a.numerator += plusDec.numerator;
+		}
+		else {
+			a.numerator *= plusDec.denominator;
+			a.numerator += (plusDec.numerator * (*this).denominator);
+			a.denominator *= plusDec.denominator;
+		}
+		//a.simplefy();
 		return a;
 	}
 }
@@ -141,10 +151,15 @@ Decimal Decimal::operator-(Decimal diffDec) {
 	}
 	else {
 		Decimal a = (*this);
-		a.numerator *= diffDec.denominator;
-		a.numerator -= (diffDec.numerator * (*this).denominator);
-		a.denominator *= diffDec.denominator;
-		a.simplefy();
+		if (a.denominator == diffDec.denominator) {
+			a.numerator -= diffDec.numerator;
+		}
+		else {
+			a.numerator *= diffDec.denominator;
+			a.numerator -= (diffDec.numerator * (*this).denominator);
+			a.denominator *= diffDec.denominator;
+		}
+		//a.simplefy();
 		return a;
 	}
 }
@@ -153,7 +168,7 @@ Decimal Decimal::operator*(Decimal multiDec) {
 	multiDec.sign = (*this).sign * multiDec.sign;
 	multiDec.numerator *= (*this).numerator;
 	multiDec.denominator *= (*this).denominator;
-	multiDec.simplefy();
+	//multiDec.simplefy();
 	if (multiDec.numerator == Integer("0")) {
 		multiDec.sign = 1;
 		multiDec.denominator = Integer("1");
@@ -165,7 +180,7 @@ Decimal Decimal::operator/(Decimal divDec) {
 	divDec.sign = (*this).sign * divDec.sign;
 	divDec.numerator = (*this).numerator * divDec.denominator;
 	divDec.denominator = (*this).denominator * divDec.numerator;
-	divDec.simplefy();
+	//divDec.simplefy();
 	if (divDec.numerator == Integer("0")) {
 		divDec.sign = 1;
 		divDec.denominator = Integer("1");
@@ -194,8 +209,9 @@ Decimal& Decimal::operator/=(Decimal divDec) {
 }
 
 Decimal Decimal::operator-() {
-	sign *= -1;
-	return (*this);
+	Decimal a = (*this);
+	a.sign *= -1;
+	return a;
 }
 
 Decimal& Decimal::operator=(Decimal& assignDec) {
@@ -237,8 +253,8 @@ bool Decimal::operator<=(Decimal compareDec) {
 }
 
 bool Decimal::operator==(Decimal compareDec) {
-	(*this).simplefy();
-	compareDec.simplefy();
+	//(*this).simplefy();
+	//compareDec.simplefy();
 	if (numerator.Int.size() == 1 && numerator.Int[0] == 0 && compareDec.numerator.Int.size() == 1 && compareDec.numerator.Int[0]) return true;
 	if (sign == compareDec.sign && (*this).numerator == compareDec.numerator && (*this).denominator == compareDec.denominator) return true;
 	return false;
@@ -277,7 +293,13 @@ void Decimal::simplefy() { // ¬ù¤À
 
 Integer Decimal::gcd(Integer a, Integer b) {
 	Integer zero("0");
-	return b == zero ? a : gcd(b, a % b);
+	if (a == zero || b == zero) return Integer("1");
+	while (a != zero && b != zero) {
+		if (a >= b) a = a % b;
+		else if (b > a) b = b % a;
+	}
+	if (a >= b) return a;
+	else return b;
 }
 
 Decimal Decimal::factorial(Decimal fac) {
@@ -322,11 +344,22 @@ Decimal Decimal::power(Decimal lower, Decimal upper) { // upper.denominator = 1 
 bool Decimal::test() { 
 	bool test_pass = true;
 
-	/*
+	
 	// test constructors
 	Decimal t;
+	t = Decimal("0.0");
+	if (t.numerator == Integer("0")) {
+		cout << "0 fail" << endl;
+		test_pass = false;
+	}
+	t = Decimal("-0.0");
+	if (t.numerator == Integer("0")) {
+		cout << "-0 fail" << endl;
+		test_pass = false;
+	}
 	Decimal a("999.999999999999999999999999999999999999999999999999999999999999999999999999999999"), 
 		b("333.333333333333333333333333333333333333333333333333333333333333333333333333333333");
+	
 	Decimal d = a;
 	t = Decimal("3.333");
 
@@ -336,6 +369,7 @@ bool Decimal::test() {
 		test_pass = false;
 	}
 	d = a;
+	
 	// test compare
 	if (!(a > b)) {
 		cout << "> fail" << endl;
@@ -361,7 +395,7 @@ bool Decimal::test() {
 		cout << "!= fail" << endl;
 		test_pass = false;
 	}
-
+	
 	//test - operator
 	d = -a;
 	if (d != Decimal("-999.999999999999999999999999999999999999999999999999999999999999999999999999999999")) {
@@ -389,7 +423,7 @@ bool Decimal::test() {
 	}
 	if (!((a - b) == Decimal("666.666666666666666666666666666666666666666666666666666666666666666666666666666666") &&
 		Decimal("9000.00000000000000000000000000000000000000000000000000000000000000000000000099")
-		- Decimal("0.00000000000000000000000000000000000000000000000000000000000000000000000098") == Integer("9000.00000000000000000000000000000000000000000000000000000000000000000000000001"))) {
+		- Decimal ("0.00000000000000000000000000000000000000000000000000000000000000000000000098") == Integer("9000.00000000000000000000000000000000000000000000000000000000000000000000000001"))) {
 		cout << "a - b fail" << endl;
 		test_pass = false;
 	}
@@ -403,7 +437,7 @@ bool Decimal::test() {
 		cout << "a / b fail" << endl;
 		test_pass = false;
 	}
-
+	/*
 	// test factorial
 	Decimal f("5");
 	Decimal f_err("5.2");
