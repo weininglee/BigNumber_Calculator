@@ -205,8 +205,9 @@ Integer Integer::operator%(Integer remDec) {
 }
 
 Integer Integer::operator-() {
+	Integer a = (*this);
 	flag *= -1;
-	return (*this);
+	return a;
 }
 
 bool Integer::operator>(Integer compareInt) {
