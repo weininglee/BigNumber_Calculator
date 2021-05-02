@@ -2,7 +2,12 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <stdexcept>
 #include "BigNum.h"
+
+struct dvide_zero_err : public std::exception {
+	const char* what() const throw () { return "/ 0"; }
+};
 
 class Calculator
 {
@@ -133,7 +138,10 @@ public:
 				for (int j = i + 1; j < arg_list.size(); j++)rs += arg_list[j];
 				Integer left = evaluate(ls), right = evaluate(rs);
 				if (arg_list[i] == "*")return left * right;
-				else return left / right;
+				else {
+					if (right == Integer("0"))throw dvide_zero_err();
+					return left / right;
+				}
 			}
 		}
 	}
