@@ -22,6 +22,7 @@ class CLI {
 	const string illegal_character = "Τぃ猭じ";
 	const string Power_error = "经Ω斗0.5计";
 	const string variable_error = "跑计嘿ぃ猭";
+	const string variable_not_found = "礚跑计";
 	map<string, Number> vars = {};
 
 public:
