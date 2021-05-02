@@ -3,7 +3,8 @@
 #include <iostream>
 #include <map>
 #include <string>
-#include "BigNum.h"
+#include "Integer.h"
+#include "Decimal.h"
 #include "CLI.h"
 
 using namespace std;

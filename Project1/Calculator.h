@@ -1,9 +1,10 @@
 #pragma once
+
 #include <iostream>
 #include <string>
 #include <vector>
 #include <stdexcept>
-#include "BigNum.h"
+#include "NumberObject.h"
 
 struct dvide_zero_err : public std::exception {
 	const char* what() const throw () { return "/ 0"; }
@@ -111,9 +112,10 @@ public:
 		return arg_list;
 	}
 	
-	static Integer evaluate(std::string form) {
+	static Number evaluate(std::string form) {
 
-		if (is_integer(form))return Integer(form);
+		if (is_integer(form))return Number(Integer(form));
+		// decimal
 
 		vector<string> arg_list = divide(form);
 
@@ -124,26 +126,37 @@ public:
 				string ls, rs;
 				for (int j = 0; j < i; j++)ls += arg_list[j];
 				for (int j = i + 1; j < arg_list.size(); j++)rs += arg_list[j];
-				Integer left = evaluate(ls), right = evaluate(rs);
+				
+				Number left = evaluate(ls), right = evaluate(rs);
+
+				if (left.type == Number::DECIMAL && right.type == Number::INTEGER)
+					right = Decimal(right.integer);
+				if (right.type == Number::DECIMAL && left.type == Number::INTEGER)
+					left = Decimal(left.integer);
+
 				if (arg_list[i] == "+")return left + right;
 				else return left - right;
 			}
 		}
-		
+
 		for (int i = arg_list.size() - 1; i >= 0; i--) {
-			// /0
 			if (arg_list[i] == "*" || arg_list[i] == "/") {
 				string ls, rs;
 				for (int j = 0; j < i; j++)ls += arg_list[j];
 				for (int j = i + 1; j < arg_list.size(); j++)rs += arg_list[j];
-				Integer left = evaluate(ls), right = evaluate(rs);
+
+				Number left = evaluate(ls), right = evaluate(rs);
+
+				if (left.type == Number::DECIMAL && right.type == Number::INTEGER)
+					right = Decimal(right.integer);
+				if (right.type == Number::DECIMAL && left.type == Number::INTEGER)
+					left = Decimal(left.integer);
+
 				if (arg_list[i] == "*")return left * right;
-				else {
-					if (right == Integer("0"))throw dvide_zero_err();
-					return left / right;
-				}
+				else return left / right;
 			}
 		}
+		
 	}
 
 	static bool is_integer(string s) {

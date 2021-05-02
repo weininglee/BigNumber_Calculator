@@ -152,7 +152,6 @@
     <Text Include="範例解答.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BigNum.h" />
     <ClInclude Include="Calculator.h" />
     <ClInclude Include="CLI.h" />
     <ClInclude Include="Decimal.h" />

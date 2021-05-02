@@ -2,14 +2,13 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "NumberObject.h"
 
 using std::string;
 using std::vector;
 using std::istream;
 using std::ostream;
 
-class Integer : public NumberObject {
+class Integer {
 public:
 	
 	vector<int> Int;
