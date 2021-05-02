@@ -35,8 +35,10 @@ public:
 	Integer& operator-=(Integer diffInt);
 	Integer& operator*=(Integer multiInt);
 	Integer& operator/=(Integer Int);
+	Integer& operator%=(Integer);
 	Integer& operator=(Integer& assignInt);
 	Integer& operator=(Integer&& assignInt);
+	Integer& simplefy();
 	friend istream& operator>>(istream&, Integer&);
 	friend ostream& operator<<(ostream&, Integer);
 

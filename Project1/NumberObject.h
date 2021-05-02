@@ -84,6 +84,17 @@ struct Number {
 		else return decimal / a.decimal;
 	}
 
+	bool operator == (Number n) {
+		if (type != n.type) {
+			if (type == INTEGER)return Decimal(integer) == n.decimal;
+			else return decimal == Decimal(n.integer);
+		}
+		else {
+			if (type == INTEGER) return integer == n.integer;
+			else return decimal == decimal;
+		}
+	}
+
 	friend ostream& operator<<(ostream& os, Number n) {
 		if (n.type == Number::INTEGER)os << n.integer;
 		else os << n.decimal;

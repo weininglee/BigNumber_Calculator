@@ -35,7 +35,7 @@ public:
 	friend ostream& operator<<(ostream& os, Decimal from);
 	
 	bool is_int();
-	void simplefy(); 
+	Decimal& simplefy(); 
 
 	static Decimal factorial(Decimal);
 	static Decimal power(Decimal, Decimal);

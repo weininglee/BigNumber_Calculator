@@ -23,15 +23,7 @@ Integer::Integer(string s) {
 		if (*i == '.') break;
 		Int.push_back(*i - '0');
 	}
-	for (int i = Int.size() - 1; i > 0; i--)
-	{
-		if (Int[i] != 0)
-		{
-			break;
-		}
-		else
-			Int.erase(Int.begin() + i);
-	}
+	simplefy();
 	if (Int.size() == 1 && Int[0] == 0)
 	{
 		flag = 1;
@@ -39,17 +31,9 @@ Integer::Integer(string s) {
 }
 
 Integer::Integer(Integer& from) {
+	from.simplefy();
 	flag = from.flag;
 	Int = from.Int;
-	for (int i = Int.size() - 1; i > 0; i--)
-	{
-		if (Int[i] != 0)
-		{
-			break;
-		}
-		else
-			Int.erase(Int.begin() + i);
-	}
 	if (Int.size() == 1 && Int[0] == 0)
 	{
 		flag = 1;
@@ -57,17 +41,9 @@ Integer::Integer(Integer& from) {
 }
 
 Integer::Integer(Integer&& from) {
+	from.simplefy();
 	flag = from.flag;
 	Int = from.Int;
-	for (int i = Int.size() - 1; i > 0; i--)
-	{
-		if (Int[i] != 0)
-		{
-			break;
-		}
-		else
-			Int.erase(Int.begin() + i);
-	}
 	if (Int.size() == 1 && Int[0] == 0)
 	{
 		flag = 1;
@@ -82,18 +58,18 @@ Integer Integer::operator+(Integer plusInt) {
 		plusInt.flag = 1;
 		a += plusInt;
 		a.flag = -1;
-		return a;
+		return a.simplefy();
 	}
 	else if (flag == 1 && plusInt.flag == -1)
 	{
 		plusInt.flag = 1;
-		return (*this) - plusInt;
+		return ((*this) - plusInt).simplefy();
 	}
 	else if (flag == -1 && plusInt.flag == 1)
 	{
 		Integer a = (*this);
 		a.flag = 1;
-		return plusInt - a;
+		return (plusInt - a).simplefy();
 	}
 	else
 	{
@@ -122,7 +98,7 @@ Integer Integer::operator+(Integer plusInt) {
 			plusInt.Int.push_back(plus);
 		}
 
-		return plusInt;
+		return plusInt.simplefy();
 	}
 }
 
@@ -131,12 +107,12 @@ Integer Integer::operator-(Integer diffInt) {
 		Integer a = (*this);
 		a.flag = 1;
 		diffInt.flag = 1;
-		return diffInt - a;
+		return (diffInt - a).simplefy();
 	}
 	else if (flag == 1 && diffInt.flag == -1)
 	{
 		diffInt.flag = 1;
-		return (*this) + diffInt;
+		return ((*this) + diffInt).simplefy();
 	}
 	else if (flag == -1 && diffInt.flag == 1)
 	{
@@ -144,13 +120,13 @@ Integer Integer::operator-(Integer diffInt) {
 		a.flag = 1;
 		a += diffInt;
 		a.flag = -1;
-		return a;
+		return a.simplefy();
 	}
 	else if( *this < diffInt)
 	{
 		diffInt -= (*this);
 		diffInt.flag = -1;
-		return diffInt;
+		return diffInt.simplefy();
 	}
 	else
 	{
@@ -181,7 +157,7 @@ Integer Integer::operator-(Integer diffInt) {
 			if (diffInt.Int[i])break;
 			diffInt.Int.pop_back();
 		}
-		return diffInt;
+		return diffInt.simplefy();
 	}
 }
 
@@ -219,37 +195,45 @@ Integer Integer::operator*(Integer multiInt) {
 		plus /= 10;
 	}
 
-	return product;
+	return product.simplefy();
 }
 
 Integer Integer::operator/(Integer div) {
-	Integer q("0"), a = (*this), one("1");
+	Integer q("0"), a = (*this), p("1");
 	int q_flag = flag * div.flag;
 	a.flag = 1;
 	div.flag = 1;
 
-	while (a >= div) {
-		a -= div;
-		q += one;
+	while (!(div * p > a))p.Int.insert(p.Int.begin(), 0); // *= 10
+	if (p.Int.size()>1)p.Int.erase(p.Int.begin()); // /=10
+
+	while (p > Integer("0")) {
+		while (a >= div * p) {
+			a -= div * p;
+			q += p;
+		}
+		p.Int.erase(p.Int.begin());
 	}
 
 	q.flag = q_flag;
-	return q;
+	return q.simplefy();
 }
 
 Integer Integer::operator%(Integer remDec) {
 	Integer a = (*this) / remDec;
 	a = (*this) - (a * remDec);
-	return a;
+	return a.simplefy();
 }
 
 Integer Integer::operator-() {
 	Integer a = (*this);
 	a.flag *= -1;
-	return a;
+	return a.simplefy();
 }
 
 bool Integer::operator>(Integer compareInt) {
+	(*this).simplefy();
+	compareInt.simplefy();
 	if (flag == 1 && compareInt.flag == -1) return true;
 	if (flag == -1 && compareInt.flag == 1) return false;
 	if (Int.size() > compareInt.Int.size()) return true;
@@ -263,6 +247,8 @@ bool Integer::operator>(Integer compareInt) {
 }
 
 bool Integer::operator<(Integer compareInt) {
+	(*this).simplefy();
+	compareInt.simplefy();
 	if (flag == 1 && compareInt.flag == -1) return false;
 	if (flag == -1 && compareInt.flag == 1) return true;
 	if (Int.size() > compareInt.Int.size()) return false;
@@ -286,6 +272,8 @@ bool Integer::operator<=(Integer compareInt) {
 }
 
 bool Integer::operator==(Integer compareInt) {
+	(*this).simplefy();
+	compareInt.simplefy();
 	if (Int.size() == 1 && compareInt.Int.size() == 1 && Int[0] == 0 && compareInt.Int[0] == 0) return true;
 	if (flag != compareInt.flag) return false;
 	if (Int.size() != compareInt.Int.size()) return false;
@@ -303,12 +291,14 @@ bool Integer::operator!=(Integer compareInt) {
 }
 
 Integer& Integer::operator=(Integer& assignInt) {
+	assignInt.simplefy();
 	flag = assignInt.flag;
 	Int = assignInt.Int;
 	return *this;
 }
 
 Integer& Integer::operator=(Integer&& assignInt) {
+	assignInt.simplefy();
 	flag = assignInt.flag;
 	Int = assignInt.Int;
 	return *this;
@@ -334,12 +324,17 @@ Integer& Integer::operator/=(Integer divInt) {
 	return *this;
 }
 
+Integer& Integer::operator%=(Integer mod) {
+	(*this) = (*this) % mod;
+	return *this;
+}
+
 Integer Integer::factorial(Integer fac) {
 	Integer one("1");
 	for (Integer i = fac - one; i > one; i -= one) {
 		fac *= i;
 	}
-	return fac;
+	return fac.simplefy();
 }
 
 Integer Integer::power(Integer lower, Integer upper) {
@@ -347,14 +342,22 @@ Integer Integer::power(Integer lower, Integer upper) {
 		lower.flag = 1;
 		lower.Int.clear();
 		lower.Int.push_back(0);
-		return lower;
+		return lower.simplefy();
 	}
 	Integer one("1");
 	Integer multi = lower;
 	for (Integer count = upper; count > one; count -= one) {
 		lower *= multi;
 	}
-	return lower;
+	return lower.simplefy();
+}
+
+Integer& Integer::simplefy() {
+	for (int i = Int.size() - 1; i > 0; i--) {
+		if (Int[i] == 0)Int.erase(Int.begin() + i);
+		else break;
+	}
+	return *this;
 }
 
 //integer input
@@ -362,7 +365,7 @@ istream& operator>>(istream& in, Integer& to)
 {
 	string A;
 	in >> A;
-	to = Integer(A);
+	to = Integer(A).simplefy();
 	return in;
 }
 
@@ -370,6 +373,7 @@ istream& operator>>(istream& in, Integer& to)
 //integer output
 ostream& operator<<(ostream& out, Integer to)
 {
+	to.simplefy();
 	if (to.flag == -1)
 		out << '-';
 	int j = (to.Int.size() - 1) % 3 + 1;

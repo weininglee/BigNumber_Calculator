@@ -115,7 +115,7 @@ public:
 	static Number evaluate(std::string form) {
 
 		if (is_integer(form))return Number(Integer(form));
-		// decimal
+		if (is_decimal(form))return Number(Decimal(form));
 
 		vector<string> arg_list = divide(form);
 
@@ -153,7 +153,10 @@ public:
 					left = Decimal(left.integer);
 
 				if (arg_list[i] == "*")return left * right;
-				else return left / right;
+				else {
+					if (right == Number(Integer("0")))throw dvide_zero_err();
+					return left / right;
+				}
 			}
 		}
 		
