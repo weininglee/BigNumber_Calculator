@@ -74,13 +74,19 @@ public:
 							if (raw[i] == '-')sign *= -1;
 							i++;
 						}
-						int c = 0;
-						while ((raw[i + c] >= '0' && raw[i + c] <= '9') || raw[i + c] == '.')
-						{
-							c++;
+						if (raw[i] == '(') {
+							arg_list.push_back("-1");
 						}
-						arg_list.push_back((sign == -1 ? "-" : "") + raw.substr(i, c));
-						i += c;
+						else
+						{
+							int c = 0;
+							while ((raw[i + c] >= '0' && raw[i + c] <= '9') || raw[i + c] == '.')
+							{
+								c++;
+							}
+							arg_list.push_back((sign == -1 ? "-" : "") + raw.substr(i, c));
+							i += c;
+						}
 					}
 					is_operatee = false;
 				}
@@ -106,6 +112,8 @@ public:
 
 		vector<string> arg_list = divide(form);
 
+		if (arg_list.size() == 1) return evaluate(arg_list[0]);
+		
 		for (int i = arg_list.size() - 1; i >= 0; i--) {
 			if (arg_list[i] == "+" || arg_list[i] == "-") {
 				string ls, rs;
