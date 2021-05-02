@@ -206,7 +206,7 @@ Integer Integer::operator%(Integer remDec) {
 
 Integer Integer::operator-() {
 	Integer a = (*this);
-	flag *= -1;
+	a.flag *= -1;
 	return a;
 }
 
@@ -394,17 +394,6 @@ bool Integer::test() {
 		test_pass = false;
 	}
 
-	//test - operator
-	d = -a;
-	if (d != Integer("-999999999999999999999999999999999999999999999999999999999999999999999999999999999")) {
-		cout << "- fail" << endl;
-		test_pass = false;
-	}
-	d = -d;
-	if (d != Integer("999999999999999999999999999999999999999999999999999999999999999999999999999999999")) {
-		cout << "- fail" << endl;
-		test_pass = false;
-	}
 
 	// test assign operator
 	d = Integer("10000");
@@ -443,6 +432,18 @@ bool Integer::test() {
 	Integer fac = factorial(f);
 	if (fac != ffac) {
 		cout << "factorial 5! fail" << endl;
+		test_pass = false;
+	}
+
+	//test - operator
+	d = -a;
+	if (d != Integer("-999999999999999999999999999999999999999999999999999999999999999999999999999999999")) {
+		cout << "- fail" << endl;
+		test_pass = false;
+	}
+	d = -d;
+	if (d != Integer("999999999999999999999999999999999999999999999999999999999999999999999999999999999")) {
+		cout << "- fail" << endl;
 		test_pass = false;
 	}
 
