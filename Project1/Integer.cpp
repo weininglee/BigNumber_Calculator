@@ -1,5 +1,6 @@
-#include "Integer.h"
 #include <iostream>
+#include "Integer.h"
+#include "Calculator.h"
 
 using std::cout;
 using std::endl;
@@ -10,23 +11,31 @@ Integer::Integer() {
 }
 
 Integer::Integer(string s) {
-	flag = 1;
-	if (s[0] == '-') {
-		flag = -1;
-		s = s.substr(1, s.size() - 1);
+	if (!Calculator::is_num(s)) {
+		Number r = Calculator::evaluate(s);
+		if (r.type == Number::DECIMAL)r = r.decimal.to_integer();
+		*this = r.integer;
 	}
-	if (s[0] == '+') {
-		flag = 1;
-		s = s.substr(1, s.size() - 1);
-	}
-	for (auto i = s.rbegin(); i != s.rend(); i++) {
-		if (*i == '.') break;
-		Int.push_back(*i - '0');
-	}
-	simplefy();
-	if (Int.size() == 1 && Int[0] == 0)
+	else
 	{
 		flag = 1;
+		if (s[0] == '-') {
+			flag = -1;
+			s = s.substr(1, s.size() - 1);
+		}
+		if (s[0] == '+') {
+			flag = 1;
+			s = s.substr(1, s.size() - 1);
+		}
+		for (auto i = s.rbegin(); i != s.rend(); i++) {
+			if (*i == '.') break;
+			Int.push_back(*i - '0');
+		}
+		simplefy();
+		if (Int.size() == 1 && Int[0] == 0)
+		{
+			flag = 1;
+		}
 	}
 }
 

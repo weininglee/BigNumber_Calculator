@@ -64,7 +64,7 @@ public:
 
 					cmd = cmd.substr(cmd.find('=') + 1, cmd.size() - (cmd.find('=') + 1));
 
-					Number r = Calculator::evaluate(cmd);
+					Number r = evaluate(cmd);
 					if (type == "Integer") {
 						if (r.type != Number::INTEGER)r = Integer(r.decimal.to_integer());
 					}
@@ -87,7 +87,7 @@ public:
 
 					cmd = cmd.substr(cmd.find('=') + 1, cmd.size() - (cmd.find('=') + 1));
 
-					Number r = Calculator::evaluate(cmd);
+					Number r = evaluate(cmd);
 					if (vars[name].type == Number::INTEGER) {
 						if (r.type != Number::INTEGER)r = Integer(r.decimal.to_integer());
 					}
@@ -98,28 +98,7 @@ public:
 
 				}
 				else {
-					for (int i = 0; i < cmd.size(); i++) {
-						if ((cmd[i] >= 'a' && cmd[i] <= 'z') || (cmd[i] >= 'A' && cmd[i] <= 'Z')) {
-							int c = 0;
-							while (((i+c)<cmd.size())&&(cmd[i+c] >= 'a' && cmd[i+c] <= 'z') ||
-								(cmd[i+c] >= 'A' && cmd[i+c] <= 'Z') ||
-								(cmd[i+c] >= '0' && cmd[i+c] <= '9'))
-							{
-								c++;
-							}
-							if (vars.find(cmd.substr(i, c)) != vars.end()) {
-								std::stringstream ss;
-								ss << vars[cmd.substr(i, c)];
-								cmd.replace(i, c, ss.str());
-								i += ss.str().size();
-							}
-							else {
-								throw var_404();
-							}
-						}
-					}
-					
-					cout << Calculator::evaluate(cmd) << endl;
+					cout << evaluate(cmd) << endl;
 				}
 			}
 			else
@@ -152,6 +131,31 @@ public:
 		// check () pair
 		// check last char 
 		return true;
+	}
+
+	Number evaluate(string cmd) {
+		for (int i = 0; i < cmd.size(); i++) {
+			if ((cmd[i] >= 'a' && cmd[i] <= 'z') || (cmd[i] >= 'A' && cmd[i] <= 'Z')) {
+				int c = 0;
+				while (((i + c) < cmd.size()) && (cmd[i + c] >= 'a' && cmd[i + c] <= 'z') ||
+					(cmd[i + c] >= 'A' && cmd[i + c] <= 'Z') ||
+					(cmd[i + c] >= '0' && cmd[i + c] <= '9'))
+				{
+					c++;
+				}
+				if (vars.find(cmd.substr(i, c)) != vars.end()) {
+					std::stringstream ss;
+					ss << vars[cmd.substr(i, c)];
+					cmd.replace(i, c, ss.str());
+					i += ss.str().size();
+				}
+				else {
+					throw var_404();
+				}
+			}
+		}
+
+		return Calculator::evaluate(cmd);
 	}
 };
 

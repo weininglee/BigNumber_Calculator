@@ -1,6 +1,7 @@
-#include"Decimal.h"
 #include <iostream>
 #include <iomanip>
+#include "Decimal.h"
+#include "Calculator.h"
 
 using std::cout;
 using std::endl;
@@ -14,32 +15,40 @@ Decimal::Decimal() {
 }
 
 Decimal::Decimal(string s) {
-	sign = 1;
-	if (s[0] == '-') {
-		sign = -1;
-		s = s.substr(1, s.size() - 1);
+	if (!Calculator::is_num(s)) {
+		Number r = Calculator::evaluate(s);
+		if (r.type == Number::INTEGER)*this = r.integer;
+		*this = r.decimal;
 	}
-	if (s[0] == '+') {
-		sign = 1;
-		s = s.substr(1, s.size() - 1);
-	}
-
-	denominator = Integer("1");
-	numerator.Int.clear();
-	bool is_point = false;
-
-	for (int i = 0; i < s.length(); i++)
+	else
 	{
-		if (s[i] == '.')is_point = true;
-		else {
-			numerator.Int.insert(numerator.Int.begin(), s[i] - '0');
-			if (is_point)denominator.Int.insert(denominator.Int.begin(), 0);
+		sign = 1;
+		if (s[0] == '-') {
+			sign = -1;
+			s = s.substr(1, s.size() - 1);
 		}
-	}
+		if (s[0] == '+') {
+			sign = 1;
+			s = s.substr(1, s.size() - 1);
+		}
 
-	power_numerator = Integer("1");
-	power_denominator = Integer("1");
-	simplefy();
+		denominator = Integer("1");
+		numerator.Int.clear();
+		bool is_point = false;
+
+		for (int i = 0; i < s.length(); i++)
+		{
+			if (s[i] == '.')is_point = true;
+			else {
+				numerator.Int.insert(numerator.Int.begin(), s[i] - '0');
+				if (is_point)denominator.Int.insert(denominator.Int.begin(), 0);
+			}
+		}
+
+		power_numerator = Integer("1");
+		power_denominator = Integer("1");
+		simplefy();
+	}
 }
 
 Decimal::Decimal(Decimal& from) {
