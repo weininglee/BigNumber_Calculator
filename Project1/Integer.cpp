@@ -20,6 +20,7 @@ Integer::Integer(string s) {
 		s = s.substr(1, s.size() - 1);
 	}
 	for (auto i = s.rbegin(); i != s.rend(); i++) {
+		if (*i == '.') break;
 		Int.push_back(*i - '0');
 	}
 }
@@ -451,6 +452,8 @@ bool Integer::test() {
 		cout << "power fail" << endl;
 		test_pass = false;
 	}
+
+	//test 
 
 	return test_pass;
 }

@@ -15,7 +15,14 @@ Decimal::Decimal() {
 
 Decimal::Decimal(string s) {
 	sign = 1;
-	if (s[0] == '-') sign = -1;
+	if (s[0] == '-') {
+		sign = -1;
+		s = s.substr(1, s.size() - 1);
+	}
+	if (s[0] == '+') {
+		sign = 1;
+		s = s.substr(1, s.size() - 1);
+	}
 	reverse(s.begin(), s.end());
 	bool isPoint = true;
 	for (int i = 0; i < s.length(); i++)
@@ -233,7 +240,7 @@ bool Decimal::operator==(Decimal compareDec) {
 	(*this).simplefy();
 	compareDec.simplefy();
 	if (numerator.Int.size() == 1 && numerator.Int[0] == 0 && compareDec.numerator.Int.size() == 1 && compareDec.numerator.Int[0]) return true;
-	if (sign == compareDec.sign && (*this).numerator * compareDec.denominator == compareDec.numerator * (*this).denominator) return true;
+	if (sign == compareDec.sign && (*this).numerator == compareDec.numerator && (*this).denominator == compareDec.denominator) return true;
 	return false;
 }
 
@@ -426,6 +433,9 @@ bool Decimal::test() {
 		cout << "power fail" << endl;
 		test_pass = false;
 	}
+
+	//test 
+
 
 	return test_pass;
 }
