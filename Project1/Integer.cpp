@@ -339,6 +339,7 @@ Integer& Integer::operator%=(Integer mod) {
 }
 
 Integer Integer::factorial(Integer fac) {
+	if (fac == Integer("0"))return Integer("1");
 	Integer one("1");
 	for (Integer i = fac - one; i > one; i -= one) {
 		fac *= i;

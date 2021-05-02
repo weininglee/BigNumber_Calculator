@@ -10,6 +10,8 @@ struct dvide_zero_err : public std::exception {
 	const char* what() const throw () { return "/ 0"; }
 };
 
+struct factorial_error :public std::exception {};
+
 class Calculator
 {
 public:
@@ -160,6 +162,24 @@ public:
 			}
 		}
 		
+		if (arg_list[arg_list.size() - 1] == "!") {
+			string ls;
+			for (int j = 0; j < arg_list.size() - 1; j++)ls += arg_list[j];
+
+			Number left = evaluate(ls);
+
+			if (left.type == Number::DECIMAL) {
+				if (!(left.decimal.is_int() && left.decimal >= Decimal("0")))
+					throw factorial_error();
+				return Decimal::factorial(left.decimal);
+			}
+			else
+			{
+				if (!(left.integer >= Integer("0")))
+					throw factorial_error();
+				return Integer::factorial(left.integer);
+			}
+		}
 	}
 
 	static bool is_integer(string s) {

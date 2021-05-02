@@ -22,6 +22,7 @@ class CLI {
 	const string illegal_character = "含有不合法字元";
 	const string Power_error = "冪次須為0.5的倍數";
 	const string variable_error = "變數名稱不合法";
+	const string factorial_err = "階乘需為正整數";
 	map<string, Number> vars = {};
 
 public:
@@ -105,6 +106,9 @@ public:
 			{
 				cout << illegal_character << endl;
 			}
+		}
+		catch (factorial_error e) {
+			cout << factorial_err << endl;
 		}
 		catch (var_404 e) {
 			cout << variable_error << endl;	

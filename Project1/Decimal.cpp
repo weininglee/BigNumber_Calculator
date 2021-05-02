@@ -338,19 +338,13 @@ Integer Decimal::gcd(Integer a, Integer b) {
 Decimal Decimal::factorial(Decimal fac) {
 	bool check = fac.is_int();
 	if (check) {
-		Integer one("1");
-		//fac.numerator /= fac.denominator;
-		//fac.denominator = one;
 		fac.simplefy();
-		for (Integer i = fac.numerator - one; i > one; i -= one) {
-			fac.numerator *= i;
-		}
-		return fac;
+		fac.numerator = Integer::factorial(fac.numerator);
 	}
 	else {
 		cout << "factorial error" << endl;
-		return fac;
 	}
+	return fac.simplefy();
 }
 
 
@@ -502,24 +496,31 @@ bool Decimal::test() {
 		cout << "1 / 3 * 3 fail" << endl;
 		test_pass = false;
 	}
+
+	//test is_int
+
+	if (!Decimal("3.0").is_int()) {
+		cout << "is_int() fail" << endl;
+		test_pass = false;
+	}
 	
-	/*
 	// test factorial
 	Decimal f("5");
-	Decimal f_err("5.2");
+	//Decimal f_err("5.2");
 	Decimal ffac("120");
-	Decimal err_ffac("184.50432"); // 5.2*4.2*3.2*2.2*1.2
+	//Decimal err_ffac("184.50432"); // 5.2*4.2*3.2*2.2*1.2
 	Decimal fac = factorial(f);
 	//Decimal err_fac = factorial(f_err);
 	if (fac != ffac) {
 		cout << "factorial 5! fail" << endl;
 		test_pass = false;
 	}
-	if (fac == err_fac) {
-		cout << "factorial 5.2! fail" << endl;
-		test_pass = false;
-	}
+	//if (fac == err_fac) {
+	//	cout << "factorial 5.2! fail" << endl;
+	//	test_pass = false;
+	//}
 
+	/*
 	// test power
 	Decimal p("2.5");
 	Decimal pp("4");
