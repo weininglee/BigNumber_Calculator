@@ -23,16 +23,55 @@ Integer::Integer(string s) {
 		if (*i == '.') break;
 		Int.push_back(*i - '0');
 	}
+	for (int i = Int.size() - 1; i > 0; i--)
+	{
+		if (Int[i] != 0)
+		{
+			break;
+		}
+		else
+			Int.erase(Int.begin() + i);
+	}
+	if (Int.size() == 1 && Int[0] == 0)
+	{
+		flag = 1;
+	}
 }
 
 Integer::Integer(Integer& from) {
 	flag = from.flag;
 	Int = from.Int;
+	for (int i = Int.size() - 1; i > 0; i--)
+	{
+		if (Int[i] != 0)
+		{
+			break;
+		}
+		else
+			Int.erase(Int.begin() + i);
+	}
+	if (Int.size() == 1 && Int[0] == 0)
+	{
+		flag = 1;
+	}
 }
 
 Integer::Integer(Integer&& from) {
 	flag = from.flag;
 	Int = from.Int;
+	for (int i = Int.size() - 1; i > 0; i--)
+	{
+		if (Int[i] != 0)
+		{
+			break;
+		}
+		else
+			Int.erase(Int.begin() + i);
+	}
+	if (Int.size() == 1 && Int[0] == 0)
+	{
+		flag = 1;
+	}
 }
 
 Integer Integer::operator+(Integer plusInt) {
