@@ -12,7 +12,10 @@ using std::string;
 
 class CLI {
 	const string prefix = ">>> ";
-	const string unknow_error = "ue";
+	const string unknow_error /*division_zero*/ = "無意義";
+	const string  illegal_character = "含有不合法字元";
+	const string  Power_error = "冪次須為0.5的倍數";
+	const string  variable_error = "變數名稱不可為關鍵字";
 //含有不合法字元
 //
 //無意義
@@ -22,7 +25,6 @@ class CLI {
 //變數名稱不可為關鍵字
 //
 //數字不可為變數名稱之字首
-//
 public:
 	void start() {
 		run_once();
