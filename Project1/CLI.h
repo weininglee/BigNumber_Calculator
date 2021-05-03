@@ -86,6 +86,8 @@ public:
 						name.pop_back();
 					}
 
+					if (vars.find(name) == vars.end())throw var_404();
+
 					cmd = cmd.substr(cmd.find('=') + 1, cmd.size() - (cmd.find('=') + 1));
 
 					Number r = evaluate(cmd);
