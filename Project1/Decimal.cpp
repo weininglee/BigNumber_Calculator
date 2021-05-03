@@ -18,7 +18,7 @@ Decimal::Decimal(string s) {
 	if (!Calculator::is_num(s)) {
 		Number r = Calculator::evaluate(s);
 		if (r.type == Number::INTEGER)*this = r.integer;
-		*this = r.decimal;
+		else *this = r.decimal;
 	}
 	else
 	{

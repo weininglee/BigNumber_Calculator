@@ -29,7 +29,6 @@ public:
 
 	static vector<string> divide(string raw) {
 		for (int i = 0; i < raw.size(); i++)if (raw[i] == ' ')raw.erase(i,1);
-		if (raw[0] == '(' && raw[raw.size() - 1] == ')')raw = raw.substr(1, raw.size() - 2);
 		if (!raw.size())return vector<string>();
 		bool is_operatee = true;
 		vector<string> arg_list = {};
@@ -111,6 +110,10 @@ public:
 				}
 			}
 		}
+		if (arg_list.size() == 1 &&
+			arg_list[0][0] == '(' &&
+			arg_list[0][arg_list[0].size() - 1] == ')')
+			return divide(arg_list[0].substr(1, arg_list[0].size() - 2));
 		return arg_list;
 	}
 	

@@ -38,75 +38,77 @@ public:
 			cout << prefix;
 			string cmd;
 			if (!getline(cin, cmd))return false;
-			if (validate(cmd)) {
-				if (cmd.find("Set") != -1) {
-					cmd = cmd.substr(cmd.find("Set") + 4,
-						cmd.size() - (cmd.find("Set") + 4));
-					string type;
-					if (cmd.find("Integer") != -1) {
-						cmd = cmd.substr(cmd.find("Integer") + 8,
-							cmd.size() - (cmd.find("Integer") + 8));
-						type = "Integer";
-					}
-					else if (cmd.find("Decimal") != -1) {
-						cmd = cmd.substr(cmd.find("Decimal") + 8,
-							cmd.size() - (cmd.find("Decimal") + 8));
-						type = "Decimal";
-					}
-					string name = cmd.substr(0, cmd.find('='));
-					while (name[0] == ' ')
-					{
-						name.erase(0, 1);
-					}
-					while (name[name.size()-1] == ' ')
-					{
-						name.pop_back();
-					}
+			if (!cmd.empty()) {
+				if (validate(cmd)) {
+					if (cmd.find("Set") != -1) {
+						cmd = cmd.substr(cmd.find("Set") + 4,
+							cmd.size() - (cmd.find("Set") + 4));
+						string type;
+						if (cmd.find("Integer") != -1) {
+							cmd = cmd.substr(cmd.find("Integer") + 8,
+								cmd.size() - (cmd.find("Integer") + 8));
+							type = "Integer";
+						}
+						else if (cmd.find("Decimal") != -1) {
+							cmd = cmd.substr(cmd.find("Decimal") + 8,
+								cmd.size() - (cmd.find("Decimal") + 8));
+							type = "Decimal";
+						}
+						string name = cmd.substr(0, cmd.find('='));
+						while (name[0] == ' ')
+						{
+							name.erase(0, 1);
+						}
+						while (name[name.size() - 1] == ' ')
+						{
+							name.pop_back();
+						}
 
-					cmd = cmd.substr(cmd.find('=') + 1, cmd.size() - (cmd.find('=') + 1));
+						cmd = cmd.substr(cmd.find('=') + 1, cmd.size() - (cmd.find('=') + 1));
 
-					Number r = evaluate(cmd);
-					if (type == "Integer") {
-						if (r.type != Number::INTEGER)r = Integer(r.decimal.to_integer());
+						Number r = evaluate(cmd);
+						if (type == "Integer") {
+							if (r.type != Number::INTEGER)r = Integer(r.decimal.to_integer());
+						}
+						else {
+							if (r.type != Number::DECIMAL)r = Decimal(r.integer);
+						}
+						vars[name] = r;
+
+					}
+					else if (cmd.find('=') != -1) {
+						string name = cmd.substr(0, cmd.find('='));
+						while (name[0] == ' ')
+						{
+							name.erase(0, 1);
+						}
+						while (name[name.size() - 1] == ' ')
+						{
+							name.pop_back();
+						}
+
+						if (vars.find(name) == vars.end())throw var_404();
+
+						cmd = cmd.substr(cmd.find('=') + 1, cmd.size() - (cmd.find('=') + 1));
+
+						Number r = evaluate(cmd);
+						if (vars[name].type == Number::INTEGER) {
+							if (r.type != Number::INTEGER)r = Integer(r.decimal.to_integer());
+						}
+						else {
+							if (r.type != Number::DECIMAL)r = Decimal(r.integer);
+						}
+						vars[name] = r;
+
 					}
 					else {
-						if (r.type != Number::DECIMAL)r = Decimal(r.integer);
+						cout << evaluate(cmd) << endl;
 					}
-					vars[name] = r;
-
 				}
-				else if (cmd.find('=') != -1) {
-					string name = cmd.substr(0, cmd.find('='));
-					while (name[0] == ' ')
-					{
-						name.erase(0, 1);
-					}
-					while (name[name.size() - 1] == ' ')
-					{
-						name.pop_back();
-					}
-
-					if (vars.find(name) == vars.end())throw var_404();
-
-					cmd = cmd.substr(cmd.find('=') + 1, cmd.size() - (cmd.find('=') + 1));
-
-					Number r = evaluate(cmd);
-					if (vars[name].type == Number::INTEGER) {
-						if (r.type != Number::INTEGER)r = Integer(r.decimal.to_integer());
-					}
-					else {
-						if (r.type != Number::DECIMAL)r = Decimal(r.integer);
-					}
-					vars[name] = r;
-
+				else
+				{
+					cout << illegal_character << endl;
 				}
-				else {
-					cout << evaluate(cmd) << endl;
-				}
-			}
-			else
-			{
-				cout << illegal_character << endl;
 			}
 		}
 		catch (factorial_error e) {
@@ -149,11 +151,15 @@ public:
 				{
 					c++;
 				}
+
+
 				if (vars.find(cmd.substr(i, c)) != vars.end()) {
 					std::stringstream ss;
 					ss << vars[cmd.substr(i, c)];
-					cmd.replace(i, c, ss.str());
-					i += ss.str().size();
+					string var = ss.str();
+					for (int i = 0; i < var.size(); i++)if (var[i] == ',')var.erase(i, 1);
+					cmd.replace(i, c, var);
+					i += var.size()-1;
 				}
 				else {
 					throw var_404();

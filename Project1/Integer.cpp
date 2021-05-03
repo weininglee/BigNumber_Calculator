@@ -14,7 +14,7 @@ Integer::Integer(string s) {
 	if (!Calculator::is_num(s)) {
 		Number r = Calculator::evaluate(s);
 		if (r.type == Number::DECIMAL)r = r.decimal.to_integer();
-		*this = r.integer;
+		else *this = r.integer;
 	}
 	else
 	{

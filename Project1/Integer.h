@@ -8,7 +8,13 @@ using std::vector;
 using std::istream;
 using std::ostream;
 
-class Integer {
+class NumberBase {
+	friend ostream& operator<<(ostream& os, NumberBase n) {
+		return os;
+	}
+};
+
+class Integer : public NumberBase{
 public:
 	
 	vector<int> Int;

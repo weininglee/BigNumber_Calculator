@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Integer.h"
 
-class Decimal {
+class Decimal : public NumberBase {
 public:
 
 	Integer denominator, numerator, power_denominator, power_numerator;
@@ -33,6 +33,12 @@ public:
 	bool operator!=(Decimal compareDec);
 	friend istream& operator>>(istream& is, Decimal& to);
 	friend ostream& operator<<(ostream& os, Decimal from);
+
+	friend Decimal operator+(Integer i, Decimal d) { return d + i; }
+	friend Decimal operator-(Integer i, Decimal d) { return Decimal(i) - d; }
+	friend Decimal operator*(Integer i, Decimal d) { return d * i; }
+	friend Decimal operator/(Integer i, Decimal d) { return Decimal(i) / d; }
+
 	
 	bool is_int();
 	Decimal& simplefy(); 
