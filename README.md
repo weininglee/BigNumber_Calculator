@@ -19,10 +19,10 @@
 作，Decimal 的小數請以分數實作，亦即：<br>
 1.0 / 3.0 * 3 = 1.00000000…，而非 0.999999999999...。<br>
 ● 程式必須可以讓使用者將任意運算式的值賦予變數，而且可以重新賦值，例如：<br>
-  - Set Integer A = 100 + 5! + Power(5, 2)<br>
-  - Set Integer A = 3<br>
-  - Set Decimal A = 1.0<br>
-  - A = A + A<br>
+- Set Integer A = 100 + 5! + Power(5, 2)<br>
+- Set Integer A = 3<br>
+- Set Decimal A = 1.0<br>
+- A = A + A<br>
 * 輸入格式自訂，測資只會給算式，Demo 的時候請自己輸入。<br>
 * 輸出格式自訂，以方便助教閱讀為原則。<br>
 * 輸出時機<br>
